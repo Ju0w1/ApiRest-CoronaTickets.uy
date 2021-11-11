@@ -15,18 +15,29 @@ import javax.validation.constraints.Null;
  * @author pabli
  */
 public class UserDTO implements Serializable {
-    @NotNull
     private String nickname;
     private String nombre;
     private String apellido;
     private String email;
     private Date nacimiento;
-    private String contrasenia;
-    
-    @Null
     private String url_imagen;
     private int seguidores;
     private int seguidos;
+    private String tipo;
+
+    public UserDTO(){
+        
+    }
+    
+    public UserDTO(String nickname, String nombre, String apellido, String email, Date nacimiento) {
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.nacimiento = nacimiento;
+    }
+    
+    
     
     //GETTERS
     public String getNickname() {
@@ -44,9 +55,6 @@ public class UserDTO implements Serializable {
     public Date getNacimiento() {
         return nacimiento;
     }
-    public String getContrasenia() {
-        return contrasenia;
-    }
     public String getUrl_imagen() {
         return url_imagen;
     }
@@ -56,8 +64,15 @@ public class UserDTO implements Serializable {
     public int getSeguidos() {
         return seguidos;
     }
+    public String getTipo() {
+        return tipo;
+    }
+    
     
     //SETTERS
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -72,9 +87,6 @@ public class UserDTO implements Serializable {
     }
     public void setNacimiento(Date fechaNacimiento) {
         this.nacimiento = fechaNacimiento;
-    }
-    public void setContrasenia(String contra) {
-        this.contrasenia = contra;
     }
     public void setUrl_imagen(String urlImagen) {
         this.url_imagen = urlImagen;

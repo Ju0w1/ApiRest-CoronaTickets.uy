@@ -45,12 +45,12 @@ public class Usuarios {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
+    
+    
     @POST
     @Path("/test")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(@Valid UserDTO user) {
+    public Response createUser(UserDTO user) {
         return Response.ok("Welcomee to the jungle " + user.getNombre()).build();
     }
 }
