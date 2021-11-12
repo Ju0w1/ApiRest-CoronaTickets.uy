@@ -5,6 +5,7 @@
  */
 package Services;
 
+import DTOs.ConsultaEspectaculoDTO;
 import DTOs.LoginDTO;
 import DTOs.RegistroDTO;
 import DTOs.UserDTO;
@@ -120,6 +121,13 @@ public class Auth {
 ////        }
 //
 //    }
+    
+    @POST
+    @Path("/consultaEspectaculo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response consultaEspectaculo(ConsultaEspectaculoDTO espec) {
+        return Response.ok(espec, MediaType.APPLICATION_JSON).build();
+    }
     
 }
 
