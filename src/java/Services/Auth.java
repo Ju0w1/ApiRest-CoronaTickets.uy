@@ -6,10 +6,13 @@
 package Services;
 
 import DTOs.LoginDTO;
+import DTOs.RegistroDTO;
 import DTOs.UserDTO;
 import Logica.Clases.Usuario;
 import Logica.Fabrica;
 import Logica.Interfaz.IControladorUsuario;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
@@ -66,6 +69,57 @@ public class Auth {
 
     }
 
+    @POST
+    @Path("/registroEspectador")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response registrarEspectador(RegistroDTO userRegistro) {
+
+        Map <String,Usuario> users = (Map <String,Usuario>) ICU.obtenerUsuarios();
+        Date fecha = userRegistro.getFecha();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaNacimiento = sdf.format(fecha);
+        if(users.get(userRegistro.getEmail())== null){
+            if (ICU.addEspectador(userRegistro.getNickname(), userRegistro.getPass(),userRegistro.getEmail(), userRegistro.getNombre(), userRegistro.getApellido(), fechaNacimiento, userRegistro.getImagen())) {
+                UserDTO userDTO = new UserDTO(userRegistro.getNickname(),userRegistro.getNombre(),userRegistro.getApellido(),userRegistro.getEmail(),userRegistro.getFecha());
+                
+                if(userRegistro.getImagen().equals("")){
+                    userDTO.setUrl_imagen("");
+                }else{
+                    userDTO.setUrl_imagen(userRegistro.getImagen());
+                }
+                return Response.ok(userDTO, MediaType.APPLICATION_JSON).build();
+            }else{
+                return Response.status(Response.Status.UNAUTHORIZED).build();
+            }
+        }else{
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    
+//    @POST
+//    @Path("/registroArtista")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response registrarArtista(RegistroDTO userRegistro) {
+//
+////        Map <String,Usuario> users = (Map <String,Usuario>) ICU.obtenerUsuarios();
+////        
+////        if(users.get(userRegistro.getEmail())== null){
+////            if (ICU.addEspectador(userRegistro.getNickname(), userRegistro.getPass(),userRegistro.getEmail(), userRegistro.getNombre(), userRegistro.getApellido(), userRegistro.getFecha().toString(), userRegistro.getImagen())) {
+////                UserDTO userDTO = new UserDTO(userRegistro.getNickname(),userRegistro.getNombre(),userRegistro.getApellido(),userRegistro.getEmail(),userRegistro.getFecha());
+////                if(userRegistro.getImagen().equals("")){
+////                    userDTO.setUrl_imagen("");
+////                }else{
+////                    userDTO.setUrl_imagen(userRegistro.getImagen());
+////                }
+////                return Response.ok(userDTO, MediaType.APPLICATION_JSON).build();
+////            }else{
+////                return Response.status(Response.Status.UNAUTHORIZED).build();
+////            }
+////        }else{
+////            return Response.status(Response.Status.UNAUTHORIZED).build();
+////        }
+//
+//    }
     
 }
 

@@ -22,24 +22,26 @@ public class RegistroDTO implements Serializable{
     private String nickname;
     private String nombre;
     private String apellido;
-    private String pass1;
-    private String pass2;
+    private String pass;
     private Date fecha;
     private String email;
     private String imagen;
 
-    public RegistroDTO(String biografia, String descripcion, String link, String nickname, String nombre, String apellido, String pass1, String pass2, Date fecha, String email, String imagen) {
+    public RegistroDTO(String biografia, String descripcion, String link, String nickname, String nombre, String apellido, String pass,Date fecha, String email, String imagen) {
         this.biografia = biografia;
         this.descripcion = descripcion;
         this.link = link;
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.pass1 = pass1;
-        this.pass2 = pass2;
+        this.pass = pass;
         this.fecha = fecha;
         this.email = email;
         this.imagen = imagen;
+    }
+    
+    public RegistroDTO(){
+        
     }
 
     //GETTERS
@@ -67,12 +69,8 @@ public class RegistroDTO implements Serializable{
         return apellido;
     }
 
-    public String getPass1() {
-        return pass1;
-    }
-
-    public String getPass2() {
-        return pass2;
+    public String getPass() {
+        return pass;
     }
 
     public Date getFecha() {
@@ -122,6 +120,10 @@ public class RegistroDTO implements Serializable{
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
     
 }
