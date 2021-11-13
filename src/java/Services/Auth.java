@@ -96,30 +96,16 @@ public class Auth {
         }
     }
     
-//    @POST
-//    @Path("/registroArtista")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response registrarArtista(RegistroDTO userRegistro) {
-//
-////        Map <String,Usuario> users = (Map <String,Usuario>) ICU.obtenerUsuarios();
-////        
-////        if(users.get(userRegistro.getEmail())== null){
-////            if (ICU.addEspectador(userRegistro.getNickname(), userRegistro.getPass(),userRegistro.getEmail(), userRegistro.getNombre(), userRegistro.getApellido(), userRegistro.getFecha().toString(), userRegistro.getImagen())) {
-////                UserDTO userDTO = new UserDTO(userRegistro.getNickname(),userRegistro.getNombre(),userRegistro.getApellido(),userRegistro.getEmail(),userRegistro.getFecha());
-////                if(userRegistro.getImagen().equals("")){
-////                    userDTO.setUrl_imagen("");
-////                }else{
-////                    userDTO.setUrl_imagen(userRegistro.getImagen());
-////                }
-////                return Response.ok(userDTO, MediaType.APPLICATION_JSON).build();
-////            }else{
-////                return Response.status(Response.Status.UNAUTHORIZED).build();
-////            }
-////        }else{
-////            return Response.status(Response.Status.UNAUTHORIZED).build();
-////        }
-//
-//    }
+    @POST
+    @Path("/registroArtista")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response registrarArtista(RegistroDTO userRegistro) {
+        if(ICU.addArtista(userRegistro.getNickname(),userRegistro.getDescripcion(),userRegistro.getBiografia(),userRegistro.getLink()) == true){
+            return Response.ok().build();
+        }else{
+             return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
     
 }
 
