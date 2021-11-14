@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/pabli/Documents/NetBeansProjects/ApiRest-CoronaTickets.uy/src/java/DTOs/RegistroDTO.java</file>
-            <file>file:/C:/Users/pabli/Documents/NetBeansProjects/ApiRest-CoronaTickets.uy/src/java/Services/Auth.java</file>
+            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/LoginDTO.java</file>
+            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/UserDTO.java</file>
+            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Auth.java</file>
+            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Usuarios.java</file>
         </group>
     </open-files>
 </project-private>
