@@ -13,6 +13,7 @@ import java.sql.Time;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -54,5 +55,17 @@ public class Funciones {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         
+    }
+    
+    @POST
+    @Path("/alta")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response altaFuncion(FuncionDTO func_, String espec_id_) {
+        if(ICF.AltaFuncionApi(espec_id_, func_.getNombre(),func_.getFechaRegistro(),func_.getHoraInicio(),func_.getFecha(),func_.getArtistas())==true){
+        //espec_id,nombre,fecha_registro, hora_inicio, fecha_comienzo, artistas
+            return Response.ok().build();
+        }else{
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
     }
 }
