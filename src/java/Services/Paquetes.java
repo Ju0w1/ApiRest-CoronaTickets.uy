@@ -7,14 +7,21 @@ package Services;
 
 import DTOs.AltaPaqueteDTO;
 import DTOs.ConsultaPaqueteDTO;
+import DTOs.EspectaculoPaqueteDTO;
+import DTOs.TransporteListEspectaculosDePaqueteDTO;
+import Logica.Clases.Espectaculo;
 import Logica.Clases.Paquete;
 import Logica.DataTypes.DTFecha;
 import Logica.Fabrica;
+import Logica.Interfaz.IControladorEspectaculo;
 import Logica.Interfaz.IControladorUsuario;
 import Logica.Interfaz.IControladorPaquete;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.GET;
@@ -34,6 +41,7 @@ public class Paquetes {
     Fabrica fabrica = Fabrica.getInstance();
     IControladorUsuario ICU = fabrica.getIControladorUsuario();
     IControladorPaquete ICP = fabrica.getIControladorPaquete();
+    IControladorEspectaculo ICE = fabrica.getIControladorEspectaculo();
     
     @POST
     @Path("/alta")
@@ -45,6 +53,30 @@ public class Paquetes {
             ICP.altaPaquete(paq.getNombre(),paq.getFechaInicio(),paq.getFechaFin(),paq.getFechaCreado(),paq.getDescuento(),paq.getDescipcion(),paq.getImagen());
             return Response.ok().build();
         }
+    }
+    
+    @GET
+    @Path("/consultaEspectaculos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response consultaEspectaculosDePaquete(@QueryParam("paquete") String nomPaquete) {
+        
+        try {
+            Map<String,Espectaculo> espectaculos = ICE.obtenerMapEspectaculosDePaquete(nomPaquete);
+            List<EspectaculoPaqueteDTO> especs = new ArrayList<>();
+
+            espectaculos.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
+                especs.add(new EspectaculoPaqueteDTO(value.getNombre(),value.getDescripcion(),String.valueOf(value.getCosto()),value.getUrlIamgen()));
+            });
+            
+            TransporteListEspectaculosDePaqueteDTO dto = new TransporteListEspectaculosDePaqueteDTO(especs);
+            
+            return Response.ok(dto, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+            
+        }
+
+        
     }
     
     @GET
