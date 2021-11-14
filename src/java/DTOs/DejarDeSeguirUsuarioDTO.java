@@ -5,11 +5,13 @@
  */
 package DTOs;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Davila
  */
-public class DejarDeSeguirUsuarioDTO {
+public class DejarDeSeguirUsuarioDTO implements Serializable{
     private String nickADejar;
     private String nickseguidor;
 
@@ -18,6 +20,10 @@ public class DejarDeSeguirUsuarioDTO {
         this.nickseguidor = nickseguidor;
     }
 
+    public DejarDeSeguirUsuarioDTO() {
+    }
+
+    
     public String getNickADejar() {
         return nickADejar;
     }

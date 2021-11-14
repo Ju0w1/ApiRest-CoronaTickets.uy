@@ -19,6 +19,9 @@ public class SeguirUsuarioDTO implements Serializable{
         this.nickASeguir = nickASeguir;
         this.nickSeguidor = nickSeguidor;
     }
+
+    public SeguirUsuarioDTO() {
+    }
     
     
     public String getNickASeguir() {

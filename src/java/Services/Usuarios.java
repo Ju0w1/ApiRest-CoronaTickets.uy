@@ -64,6 +64,8 @@ public class Usuarios {
     @Path("/dejar")
     @Produces(MediaType.APPLICATION_JSON)
     public Response dejarSeguirUser(DejarDeSeguirUsuarioDTO dejar) {
+        System.out.println(dejar.getNickADejar());
+        System.out.println(dejar.getNickseguidor());
         try {
             ICU.dejarDeSeguirUsuario(dejar.getNickseguidor(), dejar.getNickADejar());
             return Response.ok().build();
