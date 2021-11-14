@@ -5,6 +5,10 @@
  */
 package Services;
 
+import DTOs.FuncionesDeUserDTO;
+import DTOs.ListFuncionesDeUserDTO;
+import DTOs.ListPaquetesDeUserDTO;
+import DTOs.PaquetesDeUserDTO;
 import DTOs.UserDTO;
 import Logica.Clases.Artista;
 import Logica.Clases.Espectaculo;
@@ -17,7 +21,9 @@ import Logica.Interfaz.IControladorUsuario;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
@@ -77,7 +83,7 @@ public class Usuarios {
             Date fechaNacimiento= new Date();
             System.out.println("Fecha de tipo DATE::" + fechaNacimiento);
             fechaNacimiento = format.parse(fecha);
-            UserDTO artDTO = new UserDTO(art.getNickname(), art.getNombre(), art.getApellido(), art.getEmail(), fechaNacimiento, art.getImagen(), art.getDescripcion(), art.getBiografia(), art.getLinkWeb(), "artista");
+            UserDTO artDTO = new UserDTO(art.getNickname(), art.getNombre(), art.getApellido(), art.getEmail(), fechaNacimiento, art.getImagen(), art.getDescripcion(), art.getBiografia(), art.getLinkWeb(), "artista",0,0);
             
             System.out.println("Fecha:: " + fecha);
             return Response.ok(artDTO, MediaType.APPLICATION_JSON).build();
@@ -88,7 +94,7 @@ public class Usuarios {
             Date fechaNacimiento= new Date();
             fechaNacimiento = format.parse(fecha);
             //UserDTO(String nickname, String nombre, String apellido, String email, Date nacimiento)
-            UserDTO especDTO = new UserDTO(espec.getNickname(), espec.getNombre(), espec.getApellido(), espec.getEmail(), fechaNacimiento, espec.getImagen(), "espectador");
+            UserDTO especDTO = new UserDTO(espec.getNickname(), espec.getNombre(), espec.getApellido(), espec.getEmail(), fechaNacimiento, espec.getImagen(), "espectador",0,0);
             return Response.ok(especDTO, MediaType.APPLICATION_JSON).build();
         }
         
@@ -133,13 +139,16 @@ public class Usuarios {
     @Path("/loadUser")
     @Produces(MediaType.APPLICATION_JSON)
     public Response LoadUser(UserDTO user) throws ParseException {
+        int IDUser = ICU.getIdEspectadorPorNick(user.getNickname());
+        int seguidores = ICU.getSeguidores(IDUser);
+        int seguidos = ICU.getSeguidos(IDUser);
         if(ICU.obtenerArtistaPorNick(user.getNickname()) == null){ //ESPECTADOR
             Usuario espec = ICU.obtenerEspectadorPorNick(user.getNickname());
             String fecha = (espec.getNacimiento().getAnio() + "-" + espec.getNacimiento().getMes() + "-" + espec.getNacimiento().getDia());
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaNacimiento= new Date();
             fechaNacimiento = format.parse(fecha);
-            UserDTO especDTO = new UserDTO(espec.getNickname(), espec.getNombre(), espec.getApellido(), espec.getEmail(), fechaNacimiento, espec.getImagen(), "espectador");
+            UserDTO especDTO = new UserDTO(espec.getNickname(), espec.getNombre(), espec.getApellido(), espec.getEmail(), fechaNacimiento, espec.getImagen(), "espectador", seguidores, seguidos);
             return Response.ok(especDTO, MediaType.APPLICATION_JSON).build();
         } else { //ARTISTA
             Artista art = ICU.obtenerArtistaPorNick(user.getNickname());
@@ -147,10 +156,55 @@ public class Usuarios {
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaNacimiento= new Date();
             fechaNacimiento = format.parse(fecha);
-            UserDTO artDTO = new UserDTO(art.getNickname(), art.getNombre(), art.getApellido(), art.getEmail(), fechaNacimiento, art.getImagen(), art.getDescripcion(), art.getBiografia(), art.getLinkWeb(), "artista");
+            UserDTO artDTO = new UserDTO(art.getNickname(), art.getNombre(), art.getApellido(), art.getEmail(), fechaNacimiento, art.getImagen(), art.getDescripcion(), art.getBiografia(), art.getLinkWeb(), "artista", seguidores, seguidos);
             return Response.ok(artDTO, MediaType.APPLICATION_JSON).build();
         }
     }
+    @POST
+    @Path("/mapsUser")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerMapsDeUser(UserDTO user) throws ParseException {
+        //if (user.getTipo()!= null){ // SI No tiene un tipo setiado es porque es la primer llamada y quiere las funciones
+            Map<String, Funcion> funciones = Fabrica.getInstance().getIControladorEspectaculo().getRegistroDeFuncionesDeUsuarioPorNick(user.getNickname());
+            List<FuncionesDeUserDTO> ListFunciones = new ArrayList<>();
+            for (Map.Entry<String, Funcion> entry : funciones.entrySet()) {
+                String key = entry.getKey();
+                Funcion value = entry.getValue();
+                ListFunciones.add(new FuncionesDeUserDTO(value.getNombre(),value.getEspectaculo().getNombre(), value.getEspectaculo().getPlataforma()));
+            }
+            ListFuncionesDeUserDTO funcionesX= new ListFuncionesDeUserDTO(ListFunciones);
+
+            return Response.ok(funcionesX, MediaType.APPLICATION_JSON).build();
+       // } else {
+//            int idEspectador = ICU.getIdEspectadorPorNick(user.getNickname());
+//            Map<String, Paquete> paquetesRegistrado = Fabrica.getInstance().getIControladorPaquete().getPaquetesQueComproUsuario(idEspectador);
+//            List<PaquetesDeUserDTO> ListPaquetes = new ArrayList<>();
+//            for(Map.Entry<String, Paquete> entry : paquetesRegistrado.entrySet()){
+//                String key = entry.getKey();
+//                Paquete value = entry.getValue();
+//                ListPaquetes.add(new PaquetesDeUserDTO(value.getNombre(), value.getDescuento().toString()));
+//            }
+//            ListPaquetesDeUserDTO paquetesX = new ListPaquetesDeUserDTO(ListPaquetes);
+//            return Response.ok(paquetesX, MediaType.APPLICATION_JSON).build();
+        //}
+    }
+    @POST
+    @Path("/paquetesUser")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPaquetesDeUser(UserDTO user) throws ParseException {
+        int idEspectador = ICU.getIdEspectadorPorNick(user.getNickname());
+        Map<String, Paquete> paquetesRegistrado = Fabrica.getInstance().getIControladorPaquete().getPaquetesQueComproUsuario(idEspectador);
+        List<PaquetesDeUserDTO> ListPaquetes = new ArrayList<>();
+        for(Map.Entry<String, Paquete> entry : paquetesRegistrado.entrySet()){
+            String key = entry.getKey();
+            Paquete value = entry.getValue();
+            ListPaquetes.add(new PaquetesDeUserDTO(value.getNombre(), value.getDescuento().toString()));
+        }
+        ListPaquetesDeUserDTO paquetesX = new ListPaquetesDeUserDTO(ListPaquetes);
+        return Response.ok(paquetesX, MediaType.APPLICATION_JSON).build();
+    }
+    
+    
 //    if (ICU.obtenerArtistaPorNick(nick)==null){
 //            System.out.println("NO ES ARTISTA");
 //            Usuario espect = ICU.obtenerEspectadorPorNick(nick);

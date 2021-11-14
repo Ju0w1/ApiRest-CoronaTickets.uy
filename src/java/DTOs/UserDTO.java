@@ -28,7 +28,7 @@ public class UserDTO implements Serializable {
     private String desc;
     private String link;
 
-    public UserDTO(String nickname, String nombre, String apellido, String email, Date nacimiento, String url_imagen, String tipo) {
+    public UserDTO(String nickname, String nombre, String apellido, String email, Date nacimiento, String url_imagen, String tipo, int seguidores, int seguidos) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -36,8 +36,10 @@ public class UserDTO implements Serializable {
         this.nacimiento = nacimiento;
         this.url_imagen = url_imagen;
         this.tipo = tipo;
+        this.seguidores = seguidores;
+        this.seguidos = seguidos;
     }
-    public UserDTO(String nickname, String nombre, String apellido, String email, Date nacimiento, String url_imagen, String desc, String bio, String link, String tipo) {
+    public UserDTO(String nickname, String nombre, String apellido, String email, Date nacimiento, String url_imagen, String desc, String bio, String link, String tipo, int seguidores, int seguidos) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -48,6 +50,8 @@ public class UserDTO implements Serializable {
         this.desc= desc;
         this.bio = bio;
         this.link = link;
+        this.seguidores = seguidores;
+        this.seguidos = seguidos;
     }
     
     public UserDTO(){
