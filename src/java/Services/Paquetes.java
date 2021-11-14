@@ -6,10 +6,12 @@
 package Services;
 
 import DTOs.AltaPaqueteDTO;
+import DTOs.CompraPaqueteDTO;
 import DTOs.ConsultaPaqueteDTO;
 import Logica.Clases.Paquete;
 import Logica.DataTypes.DTFecha;
 import Logica.Fabrica;
+import Logica.Interfaz.IControladorEspectaculo;
 import Logica.Interfaz.IControladorUsuario;
 import Logica.Interfaz.IControladorPaquete;
 import java.text.ParseException;
@@ -34,6 +36,7 @@ public class Paquetes {
     Fabrica fabrica = Fabrica.getInstance();
     IControladorUsuario ICU = fabrica.getIControladorUsuario();
     IControladorPaquete ICP = fabrica.getIControladorPaquete();
+    IControladorEspectaculo ICE = fabrica.getIControladorEspectaculo();
     
     @POST
     @Path("/alta")
@@ -99,5 +102,15 @@ public class Paquetes {
             return Response.ok(paqueteDTO, MediaType.APPLICATION_JSON).build();
         }
         
+    }
+    
+    @POST
+    @Path("/compra")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response compraPaquete(CompraPaqueteDTO compra) {
+        String nickUsuario = compra.getNick();
+        String nomPaquete = compra.getPaquete();
+        ICP.compraPaquete(nickUsuario, nomPaquete);
+        return Response.ok("ok", MediaType.APPLICATION_JSON).build();
     }
 }
