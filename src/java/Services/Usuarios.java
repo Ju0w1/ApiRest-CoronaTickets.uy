@@ -5,6 +5,7 @@
  */
 package Services;
 
+import DTOs.SeguirDTO;
 import DTOs.UserDTO;
 import Logica.Clases.Usuario;
 import Logica.Fabrica;
@@ -46,6 +47,17 @@ public class Usuarios {
         }
     }
     
+    @POST
+    @Path("/seguir")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response seguirUser(SeguirDTO seguir) {
+        try {
+            ICU.seguirUsuario(seguir.getNickSeguidor(),seguir.getNickASeguir());
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
     
     @POST
     @Path("/test")
