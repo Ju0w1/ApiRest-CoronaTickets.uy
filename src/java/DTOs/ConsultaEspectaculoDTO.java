@@ -55,60 +55,6 @@ public class ConsultaEspectaculoDTO implements Serializable {
         this.paquetes=paquetes;
     }
 
-    
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
-    }
-
-    public void setArtista(int Artista) {
-        this.Artista = Artista;
-    }
-
-    public void setDescripcion(String Descripcion) {
-        this.Descripcion = Descripcion;
-    }
-
-    public void setCant_min_espectadores(int Cant_min_espectadores) {
-        this.Cant_min_espectadores = Cant_min_espectadores;
-    }
-
-    public void setCant_max_espectadores(int Cant_max_espectadores) {
-        this.Cant_max_espectadores = Cant_max_espectadores;
-    }
-
-    public void setUrl(String Url) {
-        this.Url = Url;
-    }
-
-    public void setCosto(double Costo) {
-        this.Costo = Costo;
-    }
-
-    public void setDuracion(double Duracion) {
-        this.Duracion = Duracion;
-    }
-
-    public void setFecha_Registro(Date Fecha_Registro) {
-        this.Fecha_Registro = Fecha_Registro;
-    }
-
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-
-    public void setUrl_imagen(String url_imagen) {
-        this.url_imagen = url_imagen;
-    }
-
-
-    public void setFunciones(List<FuncionDTOConsultaEspectaculo> funciones) {
-        this.funciones = funciones;
-    }
-
-    public void setPaquetes(List<Paquete> paquetes) {
-        this.paquetes = paquetes;
-    }
-
     public String getNombre() {
         return Nombre;
     }
@@ -160,6 +106,60 @@ public class ConsultaEspectaculoDTO implements Serializable {
     public List<Paquete> getPaquetes() {
         return paquetes;
     }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public void setArtista(int Artista) {
+        this.Artista = Artista;
+    }
+
+    public void setDescripcion(String Descripcion) {
+        this.Descripcion = Descripcion;
+    }
+
+    public void setCant_min_espectadores(int Cant_min_espectadores) {
+        this.Cant_min_espectadores = Cant_min_espectadores;
+    }
+
+    public void setCant_max_espectadores(int Cant_max_espectadores) {
+        this.Cant_max_espectadores = Cant_max_espectadores;
+    }
+
+    public void setUrl(String Url) {
+        this.Url = Url;
+    }
+
+    public void setCosto(double Costo) {
+        this.Costo = Costo;
+    }
+
+    public void setDuracion(double Duracion) {
+        this.Duracion = Duracion;
+    }
+
+    public void setFecha_Registro(Date Fecha_Registro) {
+        this.Fecha_Registro = Fecha_Registro;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public void setUrl_imagen(String url_imagen) {
+        this.url_imagen = url_imagen;
+    }
+
+    public void setFunciones(List<FuncionDTOConsultaEspectaculo> funciones) {
+        this.funciones = funciones;
+    }
+
+    public void setPaquetes(List<Paquete> paquetes) {
+        this.paquetes = paquetes;
+    }
+
+    
     
     
 
