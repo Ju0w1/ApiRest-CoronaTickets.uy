@@ -5,7 +5,8 @@
  */
 package Services;
 
-import DTOs.SeguirDTO;
+import DTOs.DejarDeSeguirUsuarioDTO;
+import DTOs.SeguirUsuarioDTO;
 import DTOs.UserDTO;
 import Logica.Clases.Usuario;
 import Logica.Fabrica;
@@ -38,7 +39,7 @@ public class Usuarios {
             UserDTO uDTO = new UserDTO();
             uDTO.setEmail(usuario.getEmail());
             uDTO.setNombre(usuario.getNombre());
-
+            
             return Response.ok(uDTO, MediaType.APPLICATION_JSON).build();
 
         } catch (Exception e) {
@@ -50,7 +51,7 @@ public class Usuarios {
     @POST
     @Path("/seguir")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response seguirUser(SeguirDTO seguir) {
+    public Response SeguirUser(SeguirUsuarioDTO seguir) {
         try {
             ICU.seguirUsuario(seguir.getNickSeguidor(),seguir.getNickASeguir());
             return Response.ok().build();
@@ -59,6 +60,19 @@ public class Usuarios {
         }
     }
     
+    @POST
+    @Path("/dejar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response dejarSeguirUser(DejarDeSeguirUsuarioDTO dejar) {
+        try {
+            ICU.dejarDeSeguirUsuario(dejar.getNickseguidor(), dejar.getNickADejar());
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    
+        
     @POST
     @Path("/test")
     @Produces(MediaType.APPLICATION_JSON)
