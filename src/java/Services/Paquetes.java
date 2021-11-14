@@ -6,6 +6,7 @@
 package Services;
 
 import DTOs.AltaPaqueteDTO;
+import DTOs.CompraPaqueteDTO;
 import DTOs.ConsultaPaqueteDTO;
 import DTOs.EspectaculoPaqueteDTO;
 import DTOs.TransporteListEspectaculosDePaqueteDTO;
@@ -131,5 +132,15 @@ public class Paquetes {
             return Response.ok(paqueteDTO, MediaType.APPLICATION_JSON).build();
         }
         
+    }
+    
+    @POST
+    @Path("/compra")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response compraPaquete(CompraPaqueteDTO compra) {
+        String nickUsuario = compra.getNick();
+        String nomPaquete = compra.getPaquete();
+        ICP.compraPaquete(nickUsuario, nomPaquete);
+        return Response.ok("ok", MediaType.APPLICATION_JSON).build();
     }
 }
