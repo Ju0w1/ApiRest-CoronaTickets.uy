@@ -10,6 +10,7 @@ import Logica.Clases.Funcion;
 import Logica.Clases.Paquete;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -18,6 +19,7 @@ import javax.validation.constraints.Null;
  *
  * @author pabli
  */
+
 public class ConsultaEspectaculoDTO implements Serializable {
     private String Nombre;
     private int Artista;
@@ -28,53 +30,16 @@ public class ConsultaEspectaculoDTO implements Serializable {
     private double Costo;
     private double Duracion;
     private Date Fecha_Registro;
-    private Map<String, Categoria> categorias;
-
+    private List<Categoria> categorias;
     private String url_imagen;
-    private String plataforma;
-    private String estado;
-    private Map<String, Funcion> funciones;
-    private Map<String, Paquete> paquetes;
+    private List<FuncionDTOConsultaEspectaculo> funciones;
+    private List<Paquete> paquetes;
     
     public ConsultaEspectaculoDTO(){
         
     }
-
-    public ConsultaEspectaculoDTO(String Nombre, int Artista, String Descripcion, int Cant_min_espectadores, int Cant_max_espectadores, String Url, double Costo, double Duracion, Date Fecha_Registro, Map<String, Categoria> categorias, String url_imagen, String plataforma, String estado, Map<String, Funcion> funciones, Map<String, Paquete> paquetes) {
-        this.Nombre = Nombre;
-        this.Artista = Artista;
-        this.Descripcion = Descripcion;
-        this.Cant_min_espectadores = Cant_min_espectadores;
-        this.Cant_max_espectadores = Cant_max_espectadores;
-        this.Url = Url;
-        this.Costo = Costo;
-        this.Duracion = Duracion;
-        this.Fecha_Registro = Fecha_Registro;
-        this.categorias = categorias;
-        this.url_imagen = url_imagen;
-        this.plataforma = plataforma;
-        this.estado = estado;
-        this.funciones = funciones;
-        this.paquetes = paquetes;
-    }
-
-    public ConsultaEspectaculoDTO(String Nombre, int Artista, String Descripcion, int Cant_min_espectadores, int Cant_max_espectadores, String Url, double Costo, double Duracion, Date Fecha_Registro, Map<String, Categoria> categorias, String url_imagen, Map<String, Funcion> funciones, Map<String, Paquete> paquetes) {
-        this.Nombre = Nombre;
-        this.Artista = Artista;
-        this.Descripcion = Descripcion;
-        this.Cant_min_espectadores = Cant_min_espectadores;
-        this.Cant_max_espectadores = Cant_max_espectadores;
-        this.Url = Url;
-        this.Costo = Costo;
-        this.Duracion = Duracion;
-        this.Fecha_Registro = Fecha_Registro;
-        this.categorias = categorias;
-        this.url_imagen = url_imagen;
-        this.funciones = funciones;
-        this.paquetes = paquetes;
-    }
     
-    public ConsultaEspectaculoDTO(String Nombre, int Artista, String Descripcion, int Cant_min_espectadores, int Cant_max_espectadores, String Url, double Costo, double Duracion, Date Fecha_Registro, String url_imagen) {
+    public ConsultaEspectaculoDTO(String Nombre, int Artista, String Descripcion, int Cant_min_espectadores, int Cant_max_espectadores, String Url, double Costo, double Duracion, Date Fecha_Registro, List<Categoria> categorias,String url_imagen,List<FuncionDTOConsultaEspectaculo> funciones, List<Paquete> paquetes) {
         this.Nombre = Nombre;
         this.Artista = Artista;
         this.Descripcion = Descripcion;
@@ -85,8 +50,11 @@ public class ConsultaEspectaculoDTO implements Serializable {
         this.Duracion = Duracion;
         this.Fecha_Registro = Fecha_Registro;
         this.url_imagen = url_imagen;
-
+        this.categorias=categorias;
+        this.funciones=funciones;
+        this.paquetes=paquetes;
     }
+
     
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
@@ -124,7 +92,7 @@ public class ConsultaEspectaculoDTO implements Serializable {
         this.Fecha_Registro = Fecha_Registro;
     }
 
-    public void setCategorias(Map<String, Categoria> categorias) {
+    public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
     }
 
@@ -132,19 +100,12 @@ public class ConsultaEspectaculoDTO implements Serializable {
         this.url_imagen = url_imagen;
     }
 
-    public void setPlataforma(String plataforma) {
-        this.plataforma = plataforma;
-    }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public void setFunciones(Map<String, Funcion> funciones) {
+    public void setFunciones(List<FuncionDTOConsultaEspectaculo> funciones) {
         this.funciones = funciones;
     }
 
-    public void setPaquetes(Map<String, Paquete> paquetes) {
+    public void setPaquetes(List<Paquete> paquetes) {
         this.paquetes = paquetes;
     }
 
@@ -184,7 +145,7 @@ public class ConsultaEspectaculoDTO implements Serializable {
         return Fecha_Registro;
     }
 
-    public Map<String, Categoria> getCategorias() {
+    public List<Categoria> getCategorias() {
         return categorias;
     }
 
@@ -192,19 +153,11 @@ public class ConsultaEspectaculoDTO implements Serializable {
         return url_imagen;
     }
 
-    public String getPlataforma() {
-        return plataforma;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public Map<String, Funcion> getFunciones() {
+    public List<FuncionDTOConsultaEspectaculo> getFunciones() {
         return funciones;
     }
 
-    public Map<String, Paquete> getPaquetes() {
+    public List<Paquete> getPaquetes() {
         return paquetes;
     }
     

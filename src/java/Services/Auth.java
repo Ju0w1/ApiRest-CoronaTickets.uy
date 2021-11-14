@@ -122,7 +122,7 @@ public class Auth {
 //
 //    }
     
-    @POST
+    @GET
     @Path("/consultaEspectaculo")
     @Produces(MediaType.APPLICATION_JSON)
     public Response consultaEspectaculo(ConsultaEspectaculoDTO espec) {

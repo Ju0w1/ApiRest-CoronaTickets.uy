@@ -7,6 +7,8 @@ package Services;
 
 import DTOs.ConsultaEspectaculoDTO;
 import DTOs.EspectaculoDTO;
+import DTOs.FuncionDTO;
+import DTOs.FuncionDTOConsultaEspectaculo;
 import DTOs.UserDTO;
 import Logica.Clases.Categoria;
 import Logica.Clases.Espectaculo;
@@ -18,8 +20,11 @@ import Logica.Interfaz.IControladorPaquete;
 import Logica.Interfaz.IControladorUsuario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -27,6 +32,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import static javax.ws.rs.core.Response.status;
 import org.json.JSONObject;
 
 /**
@@ -43,6 +50,7 @@ public class Espectaculos {
 
     @GET
     @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getEspectaculoEspecífico(@QueryParam("nombre") String nombre) {
         try {
 
@@ -51,20 +59,23 @@ public class Espectaculos {
 
             Map<String, Funcion> funcionesDeEspec = ICE.obtenerMapFunciones(nombre);
             Map<String, Paquete> paquetes = (Map<String, Paquete>) ICP.getPaqueteDeEspectaculo(nombre);
+            List<Categoria> list = new ArrayList<Categoria>(espcSeleccionado.getCategorias().values());
 
-            ConsultaEspectaculoDTO consultaespec = new ConsultaEspectaculoDTO(espcSeleccionado.getNombre(), espcSeleccionado.getArtista(), espcSeleccionado.getDescripcion(), espcSeleccionado.getMin(), espcSeleccionado.getMax(), espcSeleccionado.getUrl(), espcSeleccionado.getCosto(), espcSeleccionado.getDuracion(), espcSeleccionado.getFecha(), espcSeleccionado.getCategorias(), espcSeleccionado.getUrlIamgen(), espcSeleccionado.getPlataforma(), espcSeleccionado.getEstado(), funcionesDeEspec, paquetes);
-            System.out.println(consultaespec.getArtista());
-            System.out.println(consultaespec.getCant_max_espectadores());
-            System.out.println(consultaespec.getCant_min_espectadores());
-            System.out.println(consultaespec.getCosto());
-            System.out.println(consultaespec.getDescripcion());
-            System.out.println(consultaespec.getDuracion());
-            System.out.println(consultaespec.getFecha_Registro());
-            System.out.println(consultaespec.getUrl());
-            System.out.println(consultaespec.getUrl_imagen());
-            Gson gson = new Gson();
-            String json = gson.toJson(consultaespec);
-            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+            List<FuncionDTOConsultaEspectaculo> listFuncion = new ArrayList<>();
+            for (Map.Entry<String, Funcion> entry : funcionesDeEspec.entrySet()) {
+                FuncionDTOConsultaEspectaculo x = new FuncionDTOConsultaEspectaculo(entry.getValue().getNombre(), entry.getValue().getUrlIamgen());
+                listFuncion.add(x);
+            }
+            List<Paquete> listPaquete = new ArrayList<Paquete>(paquetes.values());
+            //ConsultaEspectaculoDTO consultaespec = new ConsultaEspectaculoDTO(espcSeleccionado.getNombre(), espcSeleccionado.getArtista(), espcSeleccionado.getDescripcion(), espcSeleccionado.getMin(), espcSeleccionado.getMax(), espcSeleccionado.getUrl(), espcSeleccionado.getCosto(), espcSeleccionado.getDuracion(), espcSeleccionado.getFecha(),espcSeleccionado.getCategorias(), espcSeleccionado.getUrlIamgen(), espcSeleccionado.getPlataforma(), espcSeleccionado.getEstado());
+            //ConsultaEspectaculoDTO consultaespec = new ConsultaEspectaculoDTO(espcSeleccionado.getNombre(), espcSeleccionado.getArtista(), espcSeleccionado.getDescripcion(), espcSeleccionado.getMin(), espcSeleccionado.getMax(), espcSeleccionado.getUrl(), espcSeleccionado.getDuracion(), espcSeleccionado.getCosto(), espcSeleccionado.getFecha(), espcSeleccionado.getUrlIamgen());
+            ConsultaEspectaculoDTO consultaespec = new ConsultaEspectaculoDTO(espcSeleccionado.getNombre(), espcSeleccionado.getArtista(), espcSeleccionado.getDescripcion(), espcSeleccionado.getMin(), espcSeleccionado.getMax(), espcSeleccionado.getUrl(), espcSeleccionado.getCosto(), espcSeleccionado.getDuracion(), espcSeleccionado.getFecha(), list, espcSeleccionado.getUrlIamgen(), listFuncion, listPaquete);
+//            Gson gson = new Gson();
+
+//            Gson gson = new Gson();
+//            String json = gson.toJson(consultaespec);
+            return Response.ok(consultaespec, MediaType.APPLICATION_JSON).build();
+            //return Response.status(Status.OK).entity(consultaespec).build();
 
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();

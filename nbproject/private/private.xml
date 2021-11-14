@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
         <file>
             <url>src/java/Services/Espectaculos.java</url>
             <bookmark id="1">
                 <name/>
-                <line>47</line>
+                <line>55</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/LoginDTO.java</file>
-            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/UserDTO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/Help.java</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Auth.java</file>
-            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Usuarios.java</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/CategoriaDTO.java</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/ConsultaEspectaculoDTO.java</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/EspectaculoDTO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/FuncionDTOConsultaEspectaculo.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/LoginDTO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/UserDTO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Usuarios.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/FuncionDTO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/CategoriasDTO.java</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Espectaculos.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/ArtistaDTO.java</file>
             <file>file:/C:/Users/Admin/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Configuracion.java</file>
         </group>
     </open-files>
