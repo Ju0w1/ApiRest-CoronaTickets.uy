@@ -5,11 +5,15 @@
  */
 package Services;
 
+import DTOs.BooleanDTO;
 import DTOs.FuncionesDeUserDTO;
 import DTOs.ListFuncionesDeUserDTO;
 import DTOs.ListPaquetesDeUserDTO;
+import DTOs.ListUserEspectDTO;
 import DTOs.PaquetesDeUserDTO;
 import DTOs.UserDTO;
+import DTOs.UserEspectDTO;
+import DTOs.followDTO;
 import Logica.Clases.Artista;
 import Logica.Clases.Espectaculo;
 import Logica.Clases.Funcion;
@@ -203,67 +207,69 @@ public class Usuarios {
         ListPaquetesDeUserDTO paquetesX = new ListPaquetesDeUserDTO(ListPaquetes);
         return Response.ok(paquetesX, MediaType.APPLICATION_JSON).build();
     }
-    
-    
-//    if (ICU.obtenerArtistaPorNick(nick)==null){
-//            System.out.println("NO ES ARTISTA");
-//            Usuario espect = ICU.obtenerEspectadorPorNick(nick);
-//            System.out.println("ES ESPECTADOR");
-//            request.setAttribute("Espectador", espect);
-//
-//            Map<String, Funcion> funciones = ICE.getRegistroDeFuncionesDeUsuarioPorNick(nick);
-//            int idEspectador = ICU.getIdEspectadorPorNick(nick);
-//            Map<String, Paquete> paquetesRegistrado = ICP.getPaquetesQueComproUsuario(idEspectador);
-//            request.setAttribute("paquetes", paquetesRegistrado);
-//            
-//            request.setAttribute("Funciones", funciones);
-//
-//            if(objSesion.getAttribute("nickname")==null){
-//                request.setAttribute("login", false);
-//                RequestDispatcher view = request.getRequestDispatcher("/Pages/Users/Perfil/Espectador.jsp");
-//                view.forward(request, response);
-//            } else {
-//                if(objSesion.getAttribute("nickname").toString().equals(nick)){
-//                    RequestDispatcher view = request.getRequestDispatcher("/Pages/Users/Perfil/Espectador-yourself.jsp");
-//                    view.forward(request, response);
-//                } else {
-//                    RequestDispatcher view = request.getRequestDispatcher("/Pages/Users/Perfil/Espectador.jsp");
-//                    view.forward(request, response);
-//                }
-//            }
-//        } else {
-//            Artista art=ICU.obtenerArtistaPorNick(nick);
-//            System.out.println("IMAGEN GUARDADA: " + art.getImagen());
-//            request.setAttribute("Artista", art);
-//            Map<String, Espectaculo> espectaculosA = ICE.obtenerEspectaculosAceptadosDeArtistaPorNick(nick);
-//            Map<String, Espectaculo> espectaculosI = ICE.obtenerEspectaculosIngresadosDeArtistaPorNick(nick);
-//            Map<String, Espectaculo> espectaculosR = ICE.obtenerEspectaculosRechazadosDeArtistaPorNick(nick);
-//            
-//            request.setAttribute("EspectaculosA", espectaculosA);
-//            request.setAttribute("EspectaculosI", espectaculosI);
-//            request.setAttribute("EspectaculosR", espectaculosR);
-//            if (espectaculosA.isEmpty()){
-//                System.out.println("ESPECTACULOS VACIOS");
-//            }
-//            if(objSesion.getAttribute("nickname")==null){
-//                request.setAttribute("login", false);
-//                RequestDispatcher view = request.getRequestDispatcher("/Pages/Users/Perfil/Artista.jsp");
-//                    view.forward(request, response);
-//            } else {
-//                if(objSesion.getAttribute("nickname").toString().equals(nick)){
-//                    System.out.println("AHHH");
-//                    System.out.println("SITIO: " + art.getLinkWeb());
-//                    RequestDispatcher view = request.getRequestDispatcher("/Pages/Users/Perfil/Artista-yourself.jsp");
-//                    view.forward(request, response);
-//                } else {
-//                    
-//                    System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-//                    RequestDispatcher view = request.getRequestDispatcher("/Pages/Users/Perfil/Artista.jsp");
-//                    view.forward(request, response);
-//                }
-//            }
-//        }
-    
+    @POST
+    @Path("/espectAceptados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEspectaculosAceptados(UserDTO user) throws ParseException {
+        Map<String, Espectaculo> espectaculosA = Fabrica.getInstance().getIControladorEspectaculo().obtenerEspectaculosAceptadosDeArtistaPorNick(user.getNickname());      
+        
+        List<UserEspectDTO> ListEspectaculos = new ArrayList<>();
+        for(Map.Entry<String, Espectaculo> entry : espectaculosA.entrySet()){
+            String key = entry.getKey();
+            Espectaculo value = entry.getValue();
+            ListEspectaculos.add(new UserEspectDTO(value.getNombre(), value.getPlataforma(), String.valueOf(value.getCosto())));
+        }
+        ListUserEspectDTO espectaculos = new ListUserEspectDTO(ListEspectaculos);
+        
+        return Response.ok(espectaculos, MediaType.APPLICATION_JSON).build();
+    }
+    @POST
+    @Path("/espectIngresados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEspectaculosIngresados(UserDTO user) throws ParseException {
+        Map<String, Espectaculo> espectaculosI = Fabrica.getInstance().getIControladorEspectaculo().obtenerEspectaculosIngresadosDeArtistaPorNick(user.getNickname());      
+        
+        List<UserEspectDTO> ListEspectaculos = new ArrayList<>();
+        for(Map.Entry<String, Espectaculo> entry : espectaculosI.entrySet()){
+            String key = entry.getKey();
+            Espectaculo value = entry.getValue();
+            ListEspectaculos.add(new UserEspectDTO(value.getNombre(), value.getPlataforma(), String.valueOf(value.getCosto())));
+        }
+        ListUserEspectDTO espectaculos = new ListUserEspectDTO(ListEspectaculos);
+        
+        return Response.ok(espectaculos, MediaType.APPLICATION_JSON).build();
+    }
+    @POST
+    @Path("/espectRechazados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEspectaculosRechazados(UserDTO user) throws ParseException {
+        Map<String, Espectaculo> espectaculosR = Fabrica.getInstance().getIControladorEspectaculo().obtenerEspectaculosRechazadosDeArtistaPorNick(user.getNickname());      
+        
+        List<UserEspectDTO> ListEspectaculos = new ArrayList<>();
+        for(Map.Entry<String, Espectaculo> entry : espectaculosR.entrySet()){
+            String key = entry.getKey();
+            Espectaculo value = entry.getValue();
+            ListEspectaculos.add(new UserEspectDTO(value.getNombre(), value.getPlataforma(), String.valueOf(value.getCosto())));
+        }
+        ListUserEspectDTO espectaculos = new ListUserEspectDTO(ListEspectaculos);
+        
+        return Response.ok(espectaculos, MediaType.APPLICATION_JSON).build();
+    }
+    @POST
+    @Path("/Losigo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response losigo(followDTO datos) throws ParseException {
+        Boolean losigo;
+        if(ICU.loSigo(datos.getYo(), datos.getEl())){
+            losigo = true;
+            System.out.println("SI LO SIGO");
+        } else {
+            System.out.println("NO LO SIGO");
+            losigo = false;
+        }
+        BooleanDTO respuesta = new BooleanDTO(losigo);
+        return Response.ok(respuesta, MediaType.APPLICATION_JSON).build();
+    }
     
 }
 
