@@ -19,31 +19,31 @@ import javax.validation.constraints.Null;
  * @author facun
  */
 public class FuncionDTO implements Serializable {
-        @NotNull
+
         private String nombre;
         private Date fecha;
         private Time horaInicio;
         private Date fechaRegistro;
-        private Espectaculo espectaculo;
-        private Map<String, Artista> artistas;
-        @Null
         private String urlImagen;
+        private String nombreEspectaculo;
         
         //CONSRUCTOR
-        public FuncionDTO (String nombre, Date fecha, Time horaInicio, Date fechaRegistro, Espectaculo espectaculo, Map<String, Artista> artistas, String urlImagen){
+        public FuncionDTO (String nombre, Date fecha, Time horaInicio, Date fechaRegistro,String urlImagen, String nombreEspectaculo){
             this.nombre= nombre;
             this.fecha= fecha;
             this.horaInicio= horaInicio;
             this.fechaRegistro= fechaRegistro;
-            this.espectaculo=espectaculo;
-            this.artistas=artistas;
             this.urlImagen=urlImagen;
+            this.nombreEspectaculo=nombreEspectaculo;
         }
         
+        public FuncionDTO() {
+        }
         //GETTERS
         public String getNombre(){
             return this.nombre;
         }
+
         
         public Date getFecha(){
             return this.fecha;
@@ -56,18 +56,21 @@ public class FuncionDTO implements Serializable {
         public Date getFechaRegistro(){
             return this.fechaRegistro;
         }
-        
-        public Map<String, Artista> getArtistas(){
-            return this.artistas;
+
+        public String getNombreEspectaculo() {
+            return nombreEspectaculo;
         }
-        
-        public Espectaculo getEspectaculo(){
-            return this.espectaculo;
+
+        public String getUrlImagen() {
+            return urlImagen;
         }
+
+    public void setNombreEspectaculo(String nombreEspectaculo) {
+        this.nombreEspectaculo = nombreEspectaculo;
+    }
+
         
-        public String getUrlIamgen (){
-            return this.urlImagen;
-        }
+
         
         //SETTERS
         public void setNombre(String nombre_){
@@ -86,9 +89,6 @@ public class FuncionDTO implements Serializable {
             this.fechaRegistro=fechaRegistro_;
         }
         
-        public void setArtistas(Map<String, Artista> artistas){
-            this.artistas=artistas;
-        }
         
         public void setUrlImagen (String urlImagen){
             this.urlImagen=urlImagen;
