@@ -29,6 +29,14 @@ public class FuncionDTO implements Serializable {
     private Map<String, Artista> artistas;
 
     //CONSRUCTOR
+    public FuncionDTO(String nombre, Date fecha, Time horaInicio, Date fechaRegistro, String urlImagen, String nombreEspectaculo) {
+        this.nombre = nombre;
+        this.fecha = fecha;
+        this.horaInicio = horaInicio;
+        this.fechaRegistro = fechaRegistro;
+        this.urlImagen = urlImagen;
+        this.nombreEspectaculo = nombreEspectaculo;
+    }
     public FuncionDTO(String nombre, Date fecha, Time horaInicio, Date fechaRegistro, String urlImagen, String nombreEspectaculo, Map<String, Artista> artistas) {
         this.nombre = nombre;
         this.fecha = fecha;
