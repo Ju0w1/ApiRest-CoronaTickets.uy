@@ -5,7 +5,6 @@
  */
 package Services;
 
-import DTOs.ConsultaEspectaculoDTO;
 import DTOs.LoginDTO;
 import DTOs.RegistroDTO;
 import DTOs.UserDTO;
@@ -106,13 +105,6 @@ public class Auth {
         }else{
              return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-    }
-    
-    @GET
-    @Path("/consultaEspectaculo")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response consultaEspectaculo(ConsultaEspectaculoDTO espec) {
-        return Response.ok(espec, MediaType.APPLICATION_JSON).build();
     }
     
 }
