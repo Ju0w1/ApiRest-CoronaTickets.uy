@@ -13,13 +13,15 @@ import javax.validation.constraints.NotNull;
  * @author facun
  */
 public class CompraPaqueteDTO implements Serializable {
-    @NotNull
     String nicknameUsuario;
     String nombrePaquete;
     
     public CompraPaqueteDTO (String nickname, String nombrePaquete){
         this.nicknameUsuario=nickname;
         this.nombrePaquete=nombrePaquete;
+    }
+
+    public CompraPaqueteDTO() {
     }
     
     //Getters
