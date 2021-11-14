@@ -5,10 +5,17 @@
  */
 package Services;
 
+import DTOs.ConsultaEspectaculoDTO;
 import DTOs.UserDTO;
+import Logica.Clases.Espectaculo;
+import Logica.Clases.Funcion;
+import Logica.Clases.Paquete;
 import Logica.Clases.Usuario;
 import Logica.Fabrica;
+import Logica.Interfaz.IControladorEspectaculo;
+import Logica.Interfaz.IControladorPaquete;
 import Logica.Interfaz.IControladorUsuario;
+import java.util.Map;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -53,6 +60,29 @@ public class Usuarios {
     public Response createUser(UserDTO user) {
         return Response.ok("Welcomee to the jungle " + user.getNombre()).build();
     }
+        
+    IControladorEspectaculo ICE = fabrica.getIControladorEspectaculo();
+    IControladorPaquete ICP = fabrica.getIControladorPaquete();
+
+//    @GET
+//    @Path("/espectaculo")
+//    public Response getEspectaculoEspecífico(@QueryParam("nombre") String nombre) {
+//        try {
+//
+//            Map<String, Espectaculo> escp = (Map<String, Espectaculo>) ICE.getEspectaculos();
+//            Espectaculo espcSeleccionado = escp.get(nombre);
+//
+//            Map<String, Funcion> funcionesDeEspec = ICE.obtenerMapFunciones(nombre);
+//            Map<String, Paquete> paquetes = (Map<String, Paquete>) ICP.getPaqueteDeEspectaculo(nombre);
+//            //ConsultaEspectaculoDTO consultaespec = new ConsultaEspectaculoDTO(espcSeleccionado.getNombre(), espcSeleccionado.getArtista(), espcSeleccionado.getDescripcion(), espcSeleccionado.getMin(), espcSeleccionado.getMax(), espcSeleccionado.getUrl(), espcSeleccionado.getCosto(), espcSeleccionado.getDuracion(), espcSeleccionado.getFecha(), espcSeleccionado.getCategorias(), espcSeleccionado.getUrlIamgen(), espcSeleccionado.getPlataforma(), espcSeleccionado.getEstado(), funcionesDeEspec, paquetes);
+//            ConsultaEspectaculoDTO consultaespec = new ConsultaEspectaculoDTO(espcSeleccionado.getNombre(), espcSeleccionado.getArtista(), espcSeleccionado.getDescripcion(), espcSeleccionado.getMin(), espcSeleccionado.getMax(), espcSeleccionado.getUrl(), espcSeleccionado.getCosto(), espcSeleccionado.getDuracion(), espcSeleccionado.getFecha(), espcSeleccionado.getCategorias(), espcSeleccionado.getUrlIamgen(), espcSeleccionado.getPlataforma(), espcSeleccionado.getEstado(), funcionesDeEspec, paquetes);
+//            return Response.ok("test", MediaType.APPLICATION_JSON).build();
+//
+//        } catch (Exception e) {
+//            System.out.println("Services.Users.getUsers()" + e.toString());
+//            return Response.status(Response.Status.UNAUTHORIZED).build();
+//        }
+//    }
 }
 
 
