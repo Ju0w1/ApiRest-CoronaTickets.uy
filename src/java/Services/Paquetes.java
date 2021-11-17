@@ -9,9 +9,12 @@ import DTOs.AltaPaqueteDTO;
 import DTOs.CompraPaqueteDTO;
 import DTOs.ConsultaPaqueteDTO;
 import DTOs.EspectaculoPaqueteDTO;
+import DTOs.PaquetesListaDTO;
+import DTOs.PlataformaDTO;
 import DTOs.TransporteListEspectaculosDePaqueteDTO;
 import Logica.Clases.Espectaculo;
 import Logica.Clases.Paquete;
+import Logica.Clases.Plataforma;
 import Logica.DataTypes.DTFecha;
 import Logica.Fabrica;
 import Logica.Interfaz.IControladorEspectaculo;
@@ -142,5 +145,37 @@ public class Paquetes {
         String nomPaquete = compra.getPaquete();
         ICP.compraPaquete(nickUsuario, nomPaquete);
         return Response.ok("ok", MediaType.APPLICATION_JSON).build();
+    }
+    
+    @GET
+    @Path("/obtenerPaquetes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPaquetes(String nomPaquete) {
+        Map<String, Paquete> paquetes = (Map<String, Paquete>) ICP.getPaquetesV2();
+        List<Paquete> listPaquete = new ArrayList<Paquete>(paquetes.values());
+        
+        if(listPaquete==null){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }else{
+            PaquetesListaDTO paqueteDTO = new PaquetesListaDTO();
+            paqueteDTO.setPaquetes(listPaquete);
+            return Response.ok(paqueteDTO, MediaType.APPLICATION_JSON).build();
+        }
+    }
+    
+    @GET
+    @Path("/obtenerPlataformasPaquete")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPlataformasPaquete(String nomPaquete) {
+        Map<String, Plataforma> plataformas = (Map<String, Plataforma>) ICE.getPlataformas();
+        List<Plataforma> listPlataformas = new ArrayList<Plataforma>(plataformas.values());
+        
+        if(listPlataformas==null){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }else{
+            PlataformaDTO plataformaDTO = new PlataformaDTO();
+            plataformaDTO.setPlataformas(listPlataformas);
+            return Response.ok(plataformaDTO, MediaType.APPLICATION_JSON).build();
+        }
     }
 }

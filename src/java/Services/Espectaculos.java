@@ -5,6 +5,7 @@
  */
 package Services;
 
+import DTOs.AgregarEspectaculoAPaqueteDTO;
 import DTOs.AltaEspectaculoDTO;
 import DTOs.ConsultaEspectaculoDTO;
 import DTOs.FuncionDTOConsultaEspectaculo;
@@ -35,25 +36,26 @@ import javax.ws.rs.core.Response;
  */
 @Path("espectaculos")
 public class Espectaculos {
+
     Fabrica fabrica = Fabrica.getInstance();
     IControladorEspectaculo ICE = fabrica.getIControladorEspectaculo();
     IControladorUsuario ICU = fabrica.getIControladorUsuario();
     IControladorPaquete ICP = fabrica.getIControladorPaquete();
-    
+
     @POST
     @Path("/alta")
     @Produces(MediaType.APPLICATION_JSON)
     public Response altaEspectaculo(AltaEspectaculoDTO espec) {
         //plataforma, nickname, nombre, descripcion, duracion, especMin, especMax, url, costo, "i", urlImagen, categorias
         //String nombrePlataforma, String nombreOrganizador, String nombreEspectaculo, String descripcion, Double duracion, int cantEspectadoresMinima, int cantEspectadoresMaxima, String URL, Double Costo, String estado, String imagen, String[] categorias
-        if(ICE.altaEspectaculoWEB(espec.getPlataforma(),espec.getNickname(),espec.getNombreEspec(),espec.getDescripcion(),espec.getDuracion(),espec.getEspecMin(),espec.getEspecMax(),espec.getUrl(),espec.getCosto(),espec.getEstado(),espec.getImagen(),espec.getCategorias()) == true){
+        if (ICE.altaEspectaculoWEB(espec.getPlataforma(), espec.getNickname(), espec.getNombreEspec(), espec.getDescripcion(), espec.getDuracion(), espec.getEspecMin(), espec.getEspecMax(), espec.getUrl(), espec.getCosto(), espec.getEstado(), espec.getImagen(), espec.getCategorias()) == true) {
             return Response.ok().build();
             //return Response.ok(uDTO, MediaType.APPLICATION_JSON).build();
-        }else{
+        } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
-    
+
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -83,6 +85,31 @@ public class Espectaculos {
             return Response.ok(consultaespec, MediaType.APPLICATION_JSON).build();
             //return Response.status(Status.OK).entity(consultaespec).build();
 
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @GET
+    @Path("/obtenerEspectaculosDeArtistas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerEspectaculosDeArtistas(@QueryParam("paquete") String nomPaquete, @QueryParam("plataforma") String nomPlataform, @QueryParam("nickname") String nickname) {
+        try {
+            ArrayList<String> espectaculos = (ArrayList<String>) ICE.obtenerEspectaculosDeArtistaQueNoEstanEnPaquete(nomPaquete, nomPlataform, nickname);
+            AgregarEspectaculoAPaqueteDTO especs = new AgregarEspectaculoAPaqueteDTO(espectaculos);
+            return Response.ok(especs, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @POST
+    @Path("/altaEspectaculoAPaquete")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response altaEspectaculoAPaquete(AgregarEspectaculoAPaqueteDTO espec) {
+        try {
+            ICP.AgregarEspPaq(espec.getEspectaculo(), espec.getPaquete());
+            return Response.ok().build();
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
