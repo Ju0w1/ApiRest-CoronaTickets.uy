@@ -102,4 +102,16 @@ public class Espectaculos {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+
+    @POST
+    @Path("/altaEspectaculoAPaquete")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response altaEspectaculoAPaquete(AgregarEspectaculoAPaqueteDTO espec) {
+        try {
+            ICP.AgregarEspPaq(espec.getEspectaculo(), espec.getPaquete());
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
 }
