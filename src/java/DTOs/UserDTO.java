@@ -92,6 +92,12 @@ public class UserDTO implements Serializable {
         this.nickname = nick;
         this.url_imagen = imagen;
     }
+    public UserDTO(String nick, String email, String imagen, String tipo){
+        this.nickname = nick;
+        this.email = email;
+        this.url_imagen = imagen;
+        this.tipo = tipo;
+    }
     
     
     //GETTERS

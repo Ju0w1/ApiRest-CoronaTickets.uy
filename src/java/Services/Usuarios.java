@@ -11,6 +11,7 @@ import DTOs.BooleanDTO;
 import DTOs.FuncionesDeUserDTO;
 import DTOs.ListFuncionesDeUserDTO;
 import DTOs.ListPaquetesDeUserDTO;
+import DTOs.ListUserDTO;
 import DTOs.ListUserEspectDTO;
 import DTOs.PaquetesDeUserDTO;
 import DTOs.UserDTO;
@@ -296,6 +297,33 @@ public class Usuarios {
         }
         BooleanDTO respuesta = new BooleanDTO(losigo);
         return Response.ok(respuesta, MediaType.APPLICATION_JSON).build();
+    }
+    @POST
+    @Path("/getAllUsers")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllUsers(UserDTO user) throws ParseException {
+        
+        Map<String, Usuario> usuarios = ICU.obtenerUsuarios();
+        String tipo;
+        List<UserDTO> ListUsers = new ArrayList<>();
+        for(Map.Entry<String, Usuario> entry : usuarios.entrySet()){
+            String key = entry.getKey();
+            Usuario value = entry.getValue();
+            if(ICU.obtenerArtistaPorNick(key)!= null){
+                tipo = "artista";
+            } else {
+                tipo = "espectador";
+            }
+            //String nick, String email, String imagen
+            if(value.getImagen()!=null){
+            ListUsers.add(new UserDTO(value.getNickname(), value.getEmail(),value.getImagen(), tipo));
+            } else {    
+            ListUsers.add(new UserDTO(value.getNickname(), value.getEmail(),"https://imgur.com/mwpO9Ct.png", tipo));
+            }
+        }
+        ListUserDTO usuarioss = new ListUserDTO(ListUsers);
+        
+        return Response.ok(usuarioss, MediaType.APPLICATION_JSON).build();
     }
     
 }
