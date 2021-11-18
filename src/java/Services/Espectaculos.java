@@ -9,7 +9,11 @@ import DTOs.AgregarEspectaculoAPaqueteDTO;
 import DTOs.AltaEspectaculoDTO;
 import DTOs.ConsultaEspectaculoDTO;
 import DTOs.FuncionDTOConsultaEspectaculo;
+import DTOs.HomeEspectaculoDTO;
+import DTOs.HomePaqueteDTO;
 import DTOs.LoginDTO;
+import DTOs.TransporteListaEspectaculosHomeDTO;
+import DTOs.TransporteListaPaquetesHomeDTO;
 import Logica.Clases.Categoria;
 import Logica.Clases.Espectaculo;
 import Logica.Clases.Funcion;
@@ -112,6 +116,28 @@ public class Espectaculos {
             return Response.ok().build();
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    
+    
+    @GET
+    @Path("/listado")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerEspectaculos() {
+        Map<String, Espectaculo> espectaculos = (Map<String, Espectaculo>) ICE.getEspectaculos();
+        
+        List<HomeEspectaculoDTO> listEspectaculos = new ArrayList<>();
+        
+        espectaculos.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
+             listEspectaculos.add(new HomeEspectaculoDTO(value.getNombre(), value.getUrlIamgen()));
+             System.out.println(value.getNombre());
+        });
+        
+        if(listEspectaculos.isEmpty()){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }else{
+            TransporteListaEspectaculosHomeDTO paquetesDTO = new TransporteListaEspectaculosHomeDTO(listEspectaculos);
+            return Response.ok(paquetesDTO, MediaType.APPLICATION_JSON).build();
         }
     }
 }

@@ -9,9 +9,11 @@ import DTOs.AltaPaqueteDTO;
 import DTOs.CompraPaqueteDTO;
 import DTOs.ConsultaPaqueteDTO;
 import DTOs.EspectaculoPaqueteDTO;
+import DTOs.HomePaqueteDTO;
 import DTOs.PaquetesListaDTO;
 import DTOs.PlataformaDTO;
 import DTOs.TransporteListEspectaculosDePaqueteDTO;
+import DTOs.TransporteListaPaquetesHomeDTO;
 import Logica.Clases.Espectaculo;
 import Logica.Clases.Paquete;
 import Logica.Clases.Plataforma;
@@ -178,4 +180,26 @@ public class Paquetes {
             return Response.ok(plataformaDTO, MediaType.APPLICATION_JSON).build();
         }
     }
+    
+    @GET
+    @Path("/listado")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPaquetes() {
+        Map<String, Paquete> paquetes = (Map<String, Paquete>) ICP.getPaquetesV2();
+        
+        List<HomePaqueteDTO> listPaquete = new ArrayList<>();
+        
+        paquetes.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
+             listPaquete.add(new HomePaqueteDTO(value.getNombre(), value.getUrl()));
+        });
+        
+        if(listPaquete==null){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }else{
+            TransporteListaPaquetesHomeDTO paquetesDTO = new TransporteListaPaquetesHomeDTO(listPaquete);
+            return Response.ok(paquetesDTO, MediaType.APPLICATION_JSON).build();
+        }
+    }
+    
+    
 }
