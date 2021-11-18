@@ -1,5 +1,6 @@
 package Services;
 
+import DTOs.AltaFuncionDTO;
 import DTOs.ArtistasDeFuncionDTO;
 import DTOs.FuncionDTO;
 import Logica.Clases.Artista;
@@ -13,6 +14,7 @@ import java.sql.Time;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -54,5 +56,17 @@ public class Funciones {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         
+    }
+    
+    @POST
+    @Path("/alta")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response altaFuncion(AltaFuncionDTO funcion) {
+        try {
+            ICF.addFuncionWEBV2(funcion.getNombreEspectaculo(), funcion.getNombre(),funcion.getFechaRegistro(),funcion.getHoraInicio(),funcion.getFecha(), funcion.getArtistas(), funcion.getUrlImagen());
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
     }
 }
