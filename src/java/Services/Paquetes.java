@@ -13,7 +13,9 @@ import DTOs.HomePaqueteDTO;
 import DTOs.PaquetesListaDTO;
 import DTOs.PlataformaDTO;
 import DTOs.TransporteListEspectaculosDePaqueteDTO;
+import DTOs.TransporteListaPaquetesCompradosPorUsuarioDTO;
 import DTOs.TransporteListaPaquetesHomeDTO;
+import DTOs.UsuarioCompraDTO;
 import Logica.Clases.Espectaculo;
 import Logica.Clases.Paquete;
 import Logica.Clases.Plataforma;
@@ -145,8 +147,13 @@ public class Paquetes {
     public Response compraPaquete(CompraPaqueteDTO compra) {
         String nickUsuario = compra.getNick();
         String nomPaquete = compra.getPaquete();
-        ICP.compraPaquete(nickUsuario, nomPaquete);
-        return Response.ok("ok", MediaType.APPLICATION_JSON).build();
+        try {
+            ICP.compraPaquete(nickUsuario, nomPaquete);
+            return Response.ok("ok", MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+            
+        }
     }
     
     @GET
@@ -201,5 +208,23 @@ public class Paquetes {
         }
     }
     
-    
+    @POST
+    @Path("/compradosPorUsuario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response compraPaquete(UsuarioCompraDTO user) {
+        try {
+            String nickname = user.getNickname();
+            int id= ICP.getIdUsuario(nickname);
+            Map<String, Paquete> paquetes = (Map<String, Paquete>) ICP.getPaquetesQueComproUsuario(id);
+            List<String> paquetesComprados = new ArrayList<>();
+            paquetes.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
+                paquetesComprados.add(value.getNombre());
+            });
+            TransporteListaPaquetesCompradosPorUsuarioDTO trPaqs = new TransporteListaPaquetesCompradosPorUsuarioDTO(paquetesComprados);
+            return Response.ok(trPaqs, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
+    }
 }

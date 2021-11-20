@@ -6,15 +6,14 @@
 package DTOs;
 
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author facun
  */
 public class CompraPaqueteDTO implements Serializable {
-    String nicknameUsuario;
-    String nombrePaquete;
+    private String nicknameUsuario;
+    private String nombrePaquete;
     
     public CompraPaqueteDTO (String nickname, String nombrePaquete){
         this.nicknameUsuario=nickname;
