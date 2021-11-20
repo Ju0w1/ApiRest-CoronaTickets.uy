@@ -14,6 +14,7 @@ import DTOs.ListPaquetesDeUserDTO;
 import DTOs.ListUserDTO;
 import DTOs.ListUserEspectDTO;
 import DTOs.PaquetesDeUserDTO;
+import DTOs.TransporteListaArtistasDTO;
 import DTOs.UserDTO;
 import DTOs.UserEspectDTO;
 import DTOs.followDTO;
@@ -326,6 +327,20 @@ public class Usuarios {
         return Response.ok(usuarioss, MediaType.APPLICATION_JSON).build();
     }
     
+    @GET
+    @Path("/artistas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerNicksArtistas() {
+        try {
+            List<String> artistas = ICU.obtenerArtistasNicks();
+
+            TransporteListaArtistasDTO arts = new TransporteListaArtistasDTO(artistas);
+            
+            return Response.ok(arts, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
 }
 
 

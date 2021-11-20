@@ -3,6 +3,7 @@ package Services;
 import DTOs.AltaFuncionDTO;
 import DTOs.ArtistasDeFuncionDTO;
 import DTOs.FuncionDTO;
+import DTOs.TransporteListaEspectaculosAceptadosArtistaDTO;
 import Logica.Clases.Artista;
 import Logica.Clases.Espectaculo;
 import Logica.Clases.Funcion;
@@ -11,6 +12,7 @@ import Logica.Interfaz.IControladorEspectaculo;
 import Logica.Interfaz.IControladorFuncion;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.GET;
@@ -69,4 +71,25 @@ public class Funciones {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+    @GET
+    @Path("/espectaculosAceptados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response espectaculosAceptados (@QueryParam("artista") String nick) {
+        try {
+            Map<String, Espectaculo> espectaculos = ICE.obtenerEspectaculosAceptadosDeArtistaPorNick(nick);
+            List<String> espectaculosAceptados = new ArrayList<>();
+            
+            espectaculos.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
+                espectaculosAceptados.add(value.getNombre());
+            });
+            
+            TransporteListaEspectaculosAceptadosArtistaDTO especs = new TransporteListaEspectaculosAceptadosArtistaDTO(espectaculosAceptados);
+            
+            return Response.ok(especs, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    
+    
 }
