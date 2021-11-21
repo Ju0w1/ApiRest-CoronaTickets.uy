@@ -6,8 +6,14 @@
 package Services;
 
 import DTOs.AltaPremioDTO;
+import DTOs.ListTrophyDTO;
+import DTOs.TrophyDTO;
+import DTOs.UserDTO;
 import Logica.Fabrica;
 import Logica.Interfaz.IControladorPremio;
+import Logica.Clases.Premio;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -34,4 +40,18 @@ public class Premios {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+    @POST
+    @Path("/getPremiosDeUser")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPremiosDeUser(UserDTO user) {
+//        if (fabrica.getIControladorUsuario().obtenerEspectadorPorNick(user.getNickname())!=null){
+            List<Premio> premios = fabrica.getIControladorPremio().getPremiosDeEspectador(user.getNickname());
+            List<TrophyDTO> premiosDTO = new ArrayList<>();
+            for (Premio premio :  premios) {
+                premiosDTO.add(new TrophyDTO(premio.getEspectador().getNombre(), premio.getDescripcion(), premio.getFuncion().getNombre()));
+            }
+            ListTrophyDTO premiosX= new ListTrophyDTO(premiosDTO);
+            return Response.ok(premiosX, MediaType.APPLICATION_JSON).build();
+        }
+//    }
 }
