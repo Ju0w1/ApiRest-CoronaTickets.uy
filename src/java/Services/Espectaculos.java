@@ -140,4 +140,16 @@ public class Espectaculos {
             return Response.ok(paquetesDTO, MediaType.APPLICATION_JSON).build();
         }
     }
+    
+    @GET
+    @Path("/finalizar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response finalizarEspectaculo(@QueryParam("espectaculo") String nomEspec) {
+        
+        if(ICE.FinalizarEspec(nomEspec)==true){
+            return Response.ok().build();            
+        }else{
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
 }
