@@ -8,11 +8,14 @@ package Services;
 import DTOs.AgregarEspectaculoAPaqueteDTO;
 import DTOs.AltaEspectaculoDTO;
 import DTOs.ConsultaEspectaculoDTO;
+import DTOs.EspecFinalizadoDTO;
 import DTOs.FuncionDTOConsultaEspectaculo;
 import DTOs.HomeEspectaculoDTO;
 import DTOs.HomePaqueteDTO;
 import DTOs.LoginDTO;
+import DTOs.TransporteListaEspecFinalizadosDTO;
 import DTOs.TransporteListaEspectaculosHomeDTO;
+import DTOs.TransporteListaNombresEspectaculosAceptadosDTO;
 import DTOs.TransporteListaPaquetesHomeDTO;
 import Logica.Clases.Categoria;
 import Logica.Clases.Espectaculo;
@@ -152,4 +155,44 @@ public class Espectaculos {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+    
+    @GET
+    @Path("/espectaculosFinalizados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerEspectaculosFinalizadosArtista(@QueryParam("artista") String nickname) {
+        
+        try {
+            Map<String, Espectaculo> especs = ICE.obtenerEspectaculosFinalizadosDeArtistaPorNick(nickname);
+            List<EspecFinalizadoDTO> especsFinalizados = new ArrayList<>();
+            especs.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
+                especsFinalizados.add(new EspecFinalizadoDTO(value.getNombre(),value.getDescripcion(), value.getUrlIamgen()));
+            });
+            TransporteListaEspecFinalizadosDTO trEspecs = new TransporteListaEspecFinalizadosDTO(especsFinalizados);
+            return Response.ok(trEspecs, MediaType.APPLICATION_JSON).build();            
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    
+    @GET
+    @Path("/espectaculosDeArtista")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerEspectaculosDeArtista(@QueryParam("artista") String nickname) {
+        
+        try {
+            Map<String, Espectaculo> especs = ICE.obtenerEspectaculosAceptadosDeArtistaPorNick(nickname);
+            List<String> espectaculosActeptados = new ArrayList<>();
+            especs.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
+                espectaculosActeptados.add(value.getNombre());
+            });
+            
+            TransporteListaNombresEspectaculosAceptadosDTO trEspecs = new TransporteListaNombresEspectaculosAceptadosDTO(espectaculosActeptados);
+
+            return Response.ok(trEspecs, MediaType.APPLICATION_JSON).build();            
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    
+    
 }
