@@ -69,9 +69,9 @@ public class Espectaculos {
     public Response getEspectaculoEspecífico(@QueryParam("nombre") String nombre) {
         try {
 
-            Map<String, Espectaculo> escp = (Map<String, Espectaculo>) ICE.getEspectaculos();
+            Map<String, Espectaculo> escp = (Map<String, Espectaculo>) ICE.getEspectaculosFinalizados();
             Espectaculo espcSeleccionado = escp.get(nombre);
-
+            //System.out.println("EspecSelec: "+espcSeleccionado.getNombre());
             Map<String, Funcion> funcionesDeEspec = ICE.obtenerMapFunciones(nombre);
             Map<String, Paquete> paquetes = (Map<String, Paquete>) ICP.getPaqueteDeEspectaculo(nombre);
             List<Categoria> list = new ArrayList<Categoria>(espcSeleccionado.getCategorias().values());
