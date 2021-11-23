@@ -47,8 +47,9 @@ public class Premios {
 //        if (fabrica.getIControladorUsuario().obtenerEspectadorPorNick(user.getNickname())!=null){
             List<Premio> premios = fabrica.getIControladorPremio().getPremiosDeEspectador(user.getNickname());
             List<TrophyDTO> premiosDTO = new ArrayList<>();
+            
             for (Premio premio :  premios) {
-                premiosDTO.add(new TrophyDTO(premio.getEspectador().getNombre(), premio.getDescripcion(), premio.getFuncion().getNombre()));
+                premiosDTO.add(new TrophyDTO(premio.getEspectador().getNombre(), premio.getDescripcion(), premio.getFuncion().getNombre(), premio.getFecha()));
             }
             ListTrophyDTO premiosX= new ListTrophyDTO(premiosDTO);
             return Response.ok(premiosX, MediaType.APPLICATION_JSON).build();
