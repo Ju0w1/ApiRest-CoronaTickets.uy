@@ -75,7 +75,7 @@ public class Espectaculos {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEspectaculoEspecífico(@QueryParam("nombre") String nombre) { 
+    public Response getEspectaculoEspecifico(@QueryParam("nombre") String nombre) { 
         try {
 
             Map<String, Espectaculo> escp = (Map<String, Espectaculo>) ICE.getEspectaculos();
@@ -282,6 +282,7 @@ public class Espectaculos {
         return Response.ok(espectaculosList, MediaType.APPLICATION_JSON).build();
     }
     
+    @POST
     @Path("/marcarFavorito")
     @Produces(MediaType.APPLICATION_JSON)
     public Response marcarFavorito(FavoritoDTO addFav) {
