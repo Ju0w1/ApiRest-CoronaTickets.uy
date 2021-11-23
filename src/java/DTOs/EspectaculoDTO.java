@@ -33,6 +33,15 @@ public class EspectaculoDTO implements Serializable {
     private String url_imagen;
     private String plataforma;
     private String estado;
+
+    public EspectaculoDTO() {
+    }
+
+    public EspectaculoDTO(String Nombre) {
+        this.Nombre = Nombre;
+    }
+    
+    
     
     //Getters
     public String getNombre(){

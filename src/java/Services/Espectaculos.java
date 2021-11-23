@@ -36,6 +36,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import DTOs.DTOListEspec;
+import DTOs.DTOespec;
+import DTOs.EspectDTO;
+import DTOs.FuncionDTO;
+import DTOs.CategoriaDTO;
+import DTOs.ListEspectDTO;
+import DTOs.ListFuncionDTO;
+import java.util.HashMap;
 
 /**
  *
@@ -67,6 +75,40 @@ public class Espectaculos {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEspectaculoEspecífico(@QueryParam("nombre") String nombre) {
+        try {
+
+            Map<String, Espectaculo> escp = (Map<String, Espectaculo>) ICE.getEspectaculos();
+            Espectaculo espcSeleccionado = escp.get(nombre);
+            //System.out.println("EspecSelec: "+espcSeleccionado.getNombre());
+            Map<String, Funcion> funcionesDeEspec = ICE.obtenerMapFunciones(nombre);
+            Map<String, Paquete> paquetes = (Map<String, Paquete>) ICP.getPaqueteDeEspectaculo(nombre);
+            List<Categoria> list = new ArrayList<Categoria>(espcSeleccionado.getCategorias().values());
+
+            List<FuncionDTOConsultaEspectaculo> listFuncion = new ArrayList<>();
+            for (Map.Entry<String, Funcion> entry : funcionesDeEspec.entrySet()) {
+                FuncionDTOConsultaEspectaculo x = new FuncionDTOConsultaEspectaculo(entry.getValue().getNombre(), entry.getValue().getUrlIamgen());
+                listFuncion.add(x);
+            }
+            List<Paquete> listPaquete = new ArrayList<Paquete>(paquetes.values());
+            //ConsultaEspectaculoDTO consultaespec = new ConsultaEspectaculoDTO(espcSeleccionado.getNombre(), espcSeleccionado.getArtista(), espcSeleccionado.getDescripcion(), espcSeleccionado.getMin(), espcSeleccionado.getMax(), espcSeleccionado.getUrl(), espcSeleccionado.getCosto(), espcSeleccionado.getDuracion(), espcSeleccionado.getFecha(),espcSeleccionado.getCategorias(), espcSeleccionado.getUrlIamgen(), espcSeleccionado.getPlataforma(), espcSeleccionado.getEstado());
+            //ConsultaEspectaculoDTO consultaespec = new ConsultaEspectaculoDTO(espcSeleccionado.getNombre(), espcSeleccionado.getArtista(), espcSeleccionado.getDescripcion(), espcSeleccionado.getMin(), espcSeleccionado.getMax(), espcSeleccionado.getUrl(), espcSeleccionado.getDuracion(), espcSeleccionado.getCosto(), espcSeleccionado.getFecha(), espcSeleccionado.getUrlIamgen());
+            ConsultaEspectaculoDTO consultaespec = new ConsultaEspectaculoDTO(espcSeleccionado.getNombre(), espcSeleccionado.getArtista(), espcSeleccionado.getDescripcion(), espcSeleccionado.getMin(), espcSeleccionado.getMax(), espcSeleccionado.getUrl(), espcSeleccionado.getCosto(), espcSeleccionado.getDuracion(), espcSeleccionado.getFecha(), list, espcSeleccionado.getUrlIamgen(), listFuncion, listPaquete);
+//            Gson gson = new Gson();
+
+//            Gson gson = new Gson();
+//            String json = gson.toJson(consultaespec);
+            return Response.ok(consultaespec, MediaType.APPLICATION_JSON).build();
+            //return Response.status(Status.OK).entity(consultaespec).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    
+    @GET
+    @Path("/finalizados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEspectaculoFinalizados(@QueryParam("nombre") String nombre) {
         try {
 
             Map<String, Espectaculo> escp = (Map<String, Espectaculo>) ICE.getEspectaculosFinalizados();
@@ -194,5 +236,49 @@ public class Espectaculos {
         }
     }
     
+    @POST
+    @Path("/getFunciones")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFunciones(EspectDTO espec) {
+        
+        Map<String, Funcion> funcionesDeEspec = ICE.obtenerMapFunciones(espec.getNombre());
+        
+        List<FuncionDTO> funcionesList = new ArrayList<>();
+        
+        for (Map.Entry<String, Funcion> entry : funcionesDeEspec.entrySet()){
+            Funcion value = entry.getValue();
+            funcionesList.add(new FuncionDTO(value.getNombre(),value.getFecha(), value.getUrlIamgen()));
+        }
+        for(FuncionDTO fun : funcionesList){
+            if(fun.getUrlImagen().equals("")){
+                fun.setUrlImagen("https://i.imgur.com/Hh3cYL8.jpeg");
+            }
+        }
+        ListFuncionDTO listaFunciones = new ListFuncionDTO(funcionesList);
+        
+        return Response.ok(listaFunciones, MediaType.APPLICATION_JSON).build();
+    }
+    
+    @POST
+    @Path("/ObtenerEspectaculos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ObtenerEspectaculos() {
+        Map<String, Espectaculo> espectaculos = (Map<String, Espectaculo>) ICE.getEspectaculos();
+        List<DTOespec> ListEspectaculosDTO = new ArrayList<>();
+        espectaculos.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
+            
+            List<CategoriaDTO> categoriasDTOList = new ArrayList<>();
+            Map<String, Categoria> categoriasAux = value.getCategorias();
+            for (Map.Entry<String, Categoria> entry2 : categoriasAux.entrySet()){
+                Categoria cat = entry2.getValue();
+                CategoriaDTO categoriaAuxDTO = new CategoriaDTO(cat.getNombre());
+                categoriasDTOList.add(categoriaAuxDTO);
+            }            
+            
+            ListEspectaculosDTO.add(new DTOespec(value.getNombre(), value.getPlataforma(), value.getUrlIamgen(), categoriasDTOList));
+        });
+        DTOListEspec espectaculosList = new DTOListEspec(ListEspectaculosDTO);
+        return Response.ok(espectaculosList, MediaType.APPLICATION_JSON).build();
+    }
     
 }
