@@ -45,6 +45,7 @@ import DTOs.CategoriaDTO;
 import DTOs.ListEspectDTO;
 import DTOs.ListFuncionDTO;
 import DTOs.getFavoritosDTO;
+import DTOs.yaEsFavoritoDTO;
 import java.util.HashMap;
 
 /**
@@ -308,4 +309,19 @@ public class Espectaculos {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+    
+    @GET
+    @Path("/yaEsFavorito")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response yaEsFavorito(@QueryParam("nickname") String nickname, @QueryParam("nombre") String nombre) {
+        try {
+            boolean esFav = ICE.yaEsFavorito(nickname,nombre);
+            yaEsFavoritoDTO yaEsFavDTO = new yaEsFavoritoDTO();
+            yaEsFavDTO.setEsFavorito(esFav);
+            return Response.ok(yaEsFavDTO, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
 }
