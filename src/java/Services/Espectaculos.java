@@ -9,6 +9,7 @@ import DTOs.AgregarEspectaculoAPaqueteDTO;
 import DTOs.AltaEspectaculoDTO;
 import DTOs.ConsultaEspectaculoDTO;
 import DTOs.EspecFinalizadoDTO;
+import DTOs.FavoritoDTO;
 import DTOs.FuncionDTOConsultaEspectaculo;
 import DTOs.HomeEspectaculoDTO;
 import DTOs.HomePaqueteDTO;
@@ -74,7 +75,7 @@ public class Espectaculos {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEspectaculoEspecífico(@QueryParam("nombre") String nombre) {
+    public Response getEspectaculoEspecífico(@QueryParam("nombre") String nombre) { 
         try {
 
             Map<String, Espectaculo> escp = (Map<String, Espectaculo>) ICE.getEspectaculos();
@@ -281,4 +282,14 @@ public class Espectaculos {
         return Response.ok(espectaculosList, MediaType.APPLICATION_JSON).build();
     }
     
+    @Path("/marcarFavorito")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response marcarFavorito(FavoritoDTO addFav) {
+        try {
+            ICE.marcarEspectaculoFavorito(addFav.getUserNickname(),addFav.getEspecNombre());
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
 }
