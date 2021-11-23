@@ -37,12 +37,6 @@ public class FuncionDTO implements Serializable {
         this.nombreEspectaculo = nombreEspectaculo;
     }
 
-    public FuncionDTO(String nombre, Date fecha, String urlImagen) {
-        this.nombre = nombre;
-        this.fecha = fecha;
-        this.urlImagen = urlImagen;
-    }
-    
     public FuncionDTO() {
     }
     //GETTERS

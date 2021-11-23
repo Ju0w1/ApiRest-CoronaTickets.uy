@@ -7,18 +7,11 @@ package Services;
 
 import DTOs.AgregarEspectaculoAPaqueteDTO;
 import DTOs.AltaEspectaculoDTO;
-import DTOs.CategoriaDTO;
 import DTOs.ConsultaEspectaculoDTO;
 import DTOs.EspecFinalizadoDTO;
-import DTOs.DTOListEspec;
-import DTOs.DTOespec;
-import DTOs.EspectDTO;
-import DTOs.FuncionDTO;
 import DTOs.FuncionDTOConsultaEspectaculo;
 import DTOs.HomeEspectaculoDTO;
 import DTOs.HomePaqueteDTO;
-import DTOs.ListEspectDTO;
-import DTOs.ListFuncionDTO;
 import DTOs.LoginDTO;
 import DTOs.TransporteListaEspecFinalizadosDTO;
 import DTOs.TransporteListaEspectaculosHomeDTO;
@@ -33,7 +26,6 @@ import Logica.Interfaz.IControladorEspectaculo;
 import Logica.Interfaz.IControladorPaquete;
 import Logica.Interfaz.IControladorUsuario;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletContext;
@@ -135,15 +127,6 @@ public class Espectaculos {
     @Path("/listado")
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerEspectaculos() {
-//        Map<String, Espectaculo> espectaculos = (Map<String, Espectaculo>) ICE.getEspectaculos();
-//        List<EspectDTO> espectaculosDTO = new ArrayList<>();
-//        espectaculos.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
-//            espectaculosDTO.add(new EspectDTO(value.getNombre(), value.getPlataforma()));
-//        });
-//        ListEspectDTO espectaculosList = new ListEspectDTO(espectaculosDTO);
-//        return Response.ok(espectaculosList, MediaType.APPLICATION_JSON).build();
-        
-        
         Map<String, Espectaculo> espectaculos = (Map<String, Espectaculo>) ICE.getEspectaculos();
         
         List<HomeEspectaculoDTO> listEspectaculos = new ArrayList<>();
@@ -212,98 +195,4 @@ public class Espectaculos {
     }
     
     
-    @Path("/getAllEspect")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllEspect() {
-        Map<String, Categoria> categoriasAux;
-        Map<String, Espectaculo> espectaculos = (Map<String, Espectaculo>) ICE.getEspectaculos();
-        List<EspectDTO> espectaculosDTO = new ArrayList<>();
-        
-//        for (Map.Entry<String, Espectaculo> entry : espectaculos.entrySet()) {
-//            Espectaculo value = entry.getValue();
-//            espectaculosDTO.add(new EspectDTO(value.getNombre(), value.getPlataforma()));
-//        }
-        espectaculos.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
-            espectaculosDTO.add(new EspectDTO(value.getNombre(), value.getPlataforma()));
-        });
-        
-        //System.out.println("Entra el FORR ");
-//        for (Map.Entry<String, Espectaculo> entry : espectaculos.entrySet()) {
-//            String key = entry.getKey();
-//            Espectaculo value = entry.getValue();
-//            
-//            List<CategoriaDTO> categoriasDTOList = new ArrayList<>();
-//            categoriasAux = value.getCategorias();
-//            for (Map.Entry<String, Categoria> entry2 : categoriasAux.entrySet()){
-//                Categoria cat = entry2.getValue();
-//                CategoriaDTO categoriaAuxDTO = new CategoriaDTO(cat.getNombre());
-//                categoriasDTOList.add(categoriaAuxDTO);
-//            }
-//            //System.out.println("ESPECTACULO::::: " + value.getNombre() + " Plataforma::: " + value.getPlataforma());
-//                //EspectDTO espectaculo = new EspectDTO(value.getNombre(), value.getPlataforma(), value.getUrlIamgen(), categoriasDTOList);
-//                //EspectDTO espectaculo = new EspectDTO(value.getNombre(), value.getUrlIamgen(), value.getPlataforma());
-//                EspectDTO espectaculo = new EspectDTO(value.getNombre(), value.getPlataforma());
-//            espectaculosDTO.add(espectaculo);
-//        }
-        
-        System.out.println("LISTA ANTES DE ENVIAR:::: ");
-        System.out.println("-------------------------------");
-        for (EspectDTO espeC : espectaculosDTO){
-            //System.out.println("E: " + espeC.getNombre() + " P: " + espeC.getPlataforma()+ " I: " + espeC.getUrlIamgen());
-            System.out.println("E: " + espeC.getNombre() + " P: " + espeC.getPlataforma());
-        }
-        System.out.println("-------------------------------");
-        
-        ListEspectDTO espectaculosList = new ListEspectDTO(espectaculosDTO);
- 
-        //return Response.ok(espectaculosList, MediaType.APPLICATION_JSON).build();
-        return Response.ok(espectaculosList, MediaType.APPLICATION_JSON).build();
-        //return Response.ok(espectaculosDTO, MediaType.APPLICATION_JSON).build();
-    }
-    
-    @POST
-    @Path("/getFunciones")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getFunciones(EspectDTO espec) {
-        
-        Map<String, Funcion> funcionesDeEspec = ICE.obtenerMapFunciones(espec.getNombre());
-        
-        List<FuncionDTO> funcionesList = new ArrayList<>();
-        
-        for (Map.Entry<String, Funcion> entry : funcionesDeEspec.entrySet()){
-            Funcion value = entry.getValue();
-            funcionesList.add(new FuncionDTO(value.getNombre(),value.getFecha(), value.getUrlIamgen()));
-        }
-        for(FuncionDTO fun : funcionesList){
-            if(fun.getUrlImagen().equals("")){
-                fun.setUrlImagen("https://i.imgur.com/Hh3cYL8.jpeg");
-            }
-        }
-        ListFuncionDTO listaFunciones = new ListFuncionDTO(funcionesList);
-        
-        return Response.ok(listaFunciones, MediaType.APPLICATION_JSON).build();
-    }
-    
-    
-    @POST
-    @Path("/ObtenerEspectaculos")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response ObtenerEspectaculos() {
-        Map<String, Espectaculo> espectaculos = (Map<String, Espectaculo>) ICE.getEspectaculos();
-        List<DTOespec> ListEspectaculosDTO = new ArrayList<>();
-        espectaculos.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
-            
-            List<CategoriaDTO> categoriasDTOList = new ArrayList<>();
-            Map<String, Categoria> categoriasAux = value.getCategorias();
-            for (Map.Entry<String, Categoria> entry2 : categoriasAux.entrySet()){
-                Categoria cat = entry2.getValue();
-                CategoriaDTO categoriaAuxDTO = new CategoriaDTO(cat.getNombre());
-                categoriasDTOList.add(categoriaAuxDTO);
-            }            
-            
-            ListEspectaculosDTO.add(new DTOespec(value.getNombre(), value.getPlataforma(), value.getUrlIamgen(), categoriasDTOList));
-        });
-        DTOListEspec espectaculosList = new DTOListEspec(ListEspectaculosDTO);
-        return Response.ok(espectaculosList, MediaType.APPLICATION_JSON).build();
-    }
 }

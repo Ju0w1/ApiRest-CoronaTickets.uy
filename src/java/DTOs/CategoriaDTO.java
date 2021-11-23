@@ -6,20 +6,19 @@
 package DTOs;
 
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author facun
  */
 public class CategoriaDTO implements Serializable {
+    @NotNull
     private String nombre;
     
     //CONSRUCTOR
     public CategoriaDTO (String nombre) {
         this.nombre = nombre;
-    }
-
-    public CategoriaDTO() {
     }
     
     //GETTERS
