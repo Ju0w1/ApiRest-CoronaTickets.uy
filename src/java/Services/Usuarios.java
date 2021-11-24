@@ -8,6 +8,7 @@ package Services;
 import DTOs.DejarDeSeguirUsuarioDTO;
 import DTOs.SeguirUsuarioDTO;
 import DTOs.BooleanDTO;
+import DTOs.CheckearSorteoDTO;
 import DTOs.FuncionesDeUserDTO;
 import DTOs.ListFuncionesDeUserDTO;
 import DTOs.ListPaquetesDeUserDTO;
@@ -337,6 +338,21 @@ public class Usuarios {
             TransporteListaArtistasDTO arts = new TransporteListaArtistasDTO(artistas);
             
             return Response.ok(arts, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    
+    @POST
+    @Path("/sorteable")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkearSiEsSorteable(CheckearSorteoDTO sorteo) {
+        try {
+            boolean es = ICU.checkearSorteo(sorteo.getNombreArtista(), sorteo.getNombreFuncion());
+            BooleanDTO b = new BooleanDTO(es);
+
+            return Response.ok(b, MediaType.APPLICATION_JSON).build();            
+            
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
