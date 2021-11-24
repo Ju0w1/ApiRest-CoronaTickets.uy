@@ -42,8 +42,10 @@ import DTOs.DTOespec;
 import DTOs.EspectDTO;
 import DTOs.FuncionDTO;
 import DTOs.CategoriaDTO;
+import DTOs.FuncionesParaArtistaDTO;
 import DTOs.ListEspectDTO;
 import DTOs.ListFuncionDTO;
+import DTOs.TransporteListaFuncionesParaArtistaDTO;
 import DTOs.getFavoritosDTO;
 import DTOs.yaEsFavoritoDTO;
 import java.util.HashMap;
@@ -324,4 +326,20 @@ public class Espectaculos {
         }
     }
 
+    @GET
+    @Path("/listarTodasLasFuncionesDeUnEspectaculo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarTodasLasFuncionesDeUnEspectaculo(@QueryParam("nombre") String nombreEspec) {
+        try {
+            Map<String, Funcion> funciones = ICE.getMapFuncionesSinFechaRestriction(nombreEspec);
+            List<FuncionesParaArtistaDTO> listF = new ArrayList<>();
+            funciones.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((value) -> {
+                listF.add(new FuncionesParaArtistaDTO(value.getNombre(),value.getUrlIamgen()));
+            });
+            TransporteListaFuncionesParaArtistaDTO trFunc = new TransporteListaFuncionesParaArtistaDTO(listF);
+            return Response.ok(trFunc, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
 }
