@@ -6,6 +6,7 @@
 package Services;
 
 import DTOs.AltaPremioDTO;
+import DTOs.DarPremioDTO;
 import DTOs.ListTrophyDTO;
 import DTOs.TrophyDTO;
 import DTOs.UserDTO;
@@ -14,6 +15,7 @@ import DTOs.numeroDTO;
 import Logica.Fabrica;
 import Logica.Interfaz.IControladorPremio;
 import Logica.Clases.Premio;
+import Logica.Interfaz.IControladorFuncion;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.POST;
@@ -29,13 +31,14 @@ import javax.ws.rs.core.Response;
 @Path("premios")
 public class Premios {
     Fabrica fabrica = Fabrica.getInstance();
-    IControladorPremio ICF = fabrica.getIControladorPremio();
+    IControladorPremio ICP = fabrica.getIControladorPremio();
+    IControladorFuncion ICF = fabrica.getIControladorFuncion();
     
     @POST
     @Path("/alta")
     @Produces(MediaType.APPLICATION_JSON)
     public Response altaEspectaculo(AltaPremioDTO premio) {
-        if (ICF.addPremio(premio.getDescripcion(), premio.getNomEspec(), premio.getCantidad()) == true) {
+        if (ICP.addPremio(premio.getDescripcion(), premio.getNomEspec(), premio.getCantidad()) == true) {
             return Response.ok().build();
 
         } else {
@@ -64,9 +67,21 @@ public class Premios {
     public Response getCantidadPremios(funcionDTOSimple funcion) {
         String nombreFuncion = funcion.getNombreFuncion();
         int cantidad = 0;
-        cantidad = fabrica.getIControladorFuncion().obtenerCantidadDePremiosASortear(nombreFuncion);
+        cantidad = ICF.obtenerCantidadDePremiosASortear(nombreFuncion);
         numeroDTO cant = new numeroDTO(cantidad);
         return Response.ok(cant, MediaType.APPLICATION_JSON).build();
+    }
+    
+    @POST
+    @Path("/otorgarPremio")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCantidadPremios(DarPremioDTO sorteado) {
+        try {
+           ICP.otorgarPremio(sorteado.getNomFuncion(), sorteado.getNickname());
+           return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
     }
     
 //    }

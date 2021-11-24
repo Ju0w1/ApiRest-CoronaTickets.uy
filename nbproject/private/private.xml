@@ -3,31 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/FuncionDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/DTOespec.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/funcionDTOSimple.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Premios.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/CategoriaDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/ListUserEspectDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/TransporteListaCategoriasDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/LoginDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/numeroDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/TrophyDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/EspectDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/UserDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Funciones.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/ListTrophyDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/ListFuncionesDeUserDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/RegistroFuncionDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/HomeEspectaculoDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/AltaPaqueteDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/ListEspectDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Usuarios.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/DTOListEspec.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/ListUserDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/ListFuncionDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/DTOs/EspectaculoDTO.java</file>
-            <file>file:/C:/Users/milto/Documents/GitHub/ApiRest-CoronaTickets.uy/src/java/Services/Espectaculos.java</file>
+            <file>file:/C:/Users/pabli/Documents/NetBeansProjects/ApiRest-CoronaTickets.uy/src/java/Services/Usuarios.java</file>
+            <file>file:/C:/Users/pabli/Documents/NetBeansProjects/ApiRest-CoronaTickets.uy/src/java/DTOs/CheckearSorteoDTO.java</file>
+            <file>file:/C:/Users/pabli/Documents/NetBeansProjects/ApiRest-CoronaTickets.uy/src/java/DTOs/DarPremioDTO.java</file>
+            <file>file:/C:/Users/pabli/Documents/NetBeansProjects/ApiRest-CoronaTickets.uy/src/java/Services/Premios.java</file>
         </group>
     </open-files>
 </project-private>
