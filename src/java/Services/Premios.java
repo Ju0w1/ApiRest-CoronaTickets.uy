@@ -9,6 +9,8 @@ import DTOs.AltaPremioDTO;
 import DTOs.ListTrophyDTO;
 import DTOs.TrophyDTO;
 import DTOs.UserDTO;
+import DTOs.funcionDTOSimple;
+import DTOs.numeroDTO;
 import Logica.Fabrica;
 import Logica.Interfaz.IControladorPremio;
 import Logica.Clases.Premio;
@@ -54,5 +56,18 @@ public class Premios {
             ListTrophyDTO premiosX= new ListTrophyDTO(premiosDTO);
             return Response.ok(premiosX, MediaType.APPLICATION_JSON).build();
         }
+    
+    
+    @POST
+    @Path("/getCantidadPremios")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCantidadPremios(funcionDTOSimple funcion) {
+        String nombreFuncion = funcion.getNombreFuncion();
+        int cantidad = 0;
+        cantidad = fabrica.getIControladorFuncion().obtenerCantidadDePremiosASortear(nombreFuncion);
+        numeroDTO cant = new numeroDTO(cantidad);
+        return Response.ok(cant, MediaType.APPLICATION_JSON).build();
+    }
+    
 //    }
 }

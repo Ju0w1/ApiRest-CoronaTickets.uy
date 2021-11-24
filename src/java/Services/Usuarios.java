@@ -19,6 +19,7 @@ import DTOs.TransporteListaArtistasDTO;
 import DTOs.UserDTO;
 import DTOs.UserEspectDTO;
 import DTOs.followDTO;
+import DTOs.funcionDTOSimple;
 import Logica.Clases.Artista;
 import Logica.Clases.Espectaculo;
 import Logica.Clases.Funcion;
@@ -352,6 +353,24 @@ public class Usuarios {
             BooleanDTO b = new BooleanDTO(es);
 
             return Response.ok(b, MediaType.APPLICATION_JSON).build();            
+            
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    @POST
+    @Path("/listarEspectadoresRegistrados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarEspectadoresRegistrados(funcionDTOSimple funcion) {
+        List<UserDTO> listaDTO = new ArrayList<>();
+        try {
+            List<Usuario> lista= ICU.obtenerEspectadoresRegistrados(funcion.getNombreFuncion());
+            for(Usuario usu : lista){
+                listaDTO.add(new UserDTO(usu.getNickname(), usu.getImagen()));
+            }
+            ListUserDTO listaUserDTO = new ListUserDTO(listaDTO);
+            
+            return Response.ok(listaUserDTO, MediaType.APPLICATION_JSON).build();            
             
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
